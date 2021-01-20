@@ -30,6 +30,12 @@ Route::get('/read', function () {
 });
 */
 
+/*
 Route::get('/update', function (){
     return DB::update('update posts set title = ? where id = 1', ['Updated title']);
+});
+*/
+
+Route::get('/delete', function (){
+   return DB::delete('delete from posts where id = ?', [1]);
 });
