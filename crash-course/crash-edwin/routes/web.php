@@ -24,6 +24,12 @@ Route::get('/insert', function () {
 });
 */
 
+/*
 Route::get('/read', function () {
     return var_dump(DB::selectOne('select * from posts where id = ?', [1]));
+});
+*/
+
+Route::get('/update', function (){
+    return DB::update('update posts set title = ? where id = 1', ['Updated title']);
 });
