@@ -18,6 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/*
 Route::get('/insert', function () {
     DB::insert("insert into posts(title, body) values (?, ?)", ['PHP with Laravel', 'PHP laravel is the best thing that has happend to PHP']);
+});
+*/
+
+Route::get('/read', function () {
+    return var_dump(DB::selectOne('select * from posts where id = ?', [1]));
 });
