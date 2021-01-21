@@ -14,8 +14,14 @@
 <div class="container">
 
     @if(session()->has('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success" id="success-flag-message">
             {{ session()->get('success') }}
+
+            <script>
+                setTimeout(() => {
+                    document.getElementById('success-flag-message').style.display = 'none';
+                }, 3000);
+            </script>
         </div>
     @endif
 
