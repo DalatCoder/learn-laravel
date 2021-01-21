@@ -14,4 +14,9 @@ use \App\Http\Controllers\TodosController;
 |
 */
 
-Route::get('/', [TodosController::class, 'index']);
+Route::get('/', function () {
+    return redirect('/todos');
+});
+
+Route::get('/todos', [TodosController::class, 'index']);
+Route::get('/todos/{todoId}', [TodosController::class, 'show']);
