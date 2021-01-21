@@ -90,7 +90,7 @@
                 <script>
                     setTimeout(() => {
                         document.getElementById('flash-message').style.display = 'none';
-                    }, 5000)
+                    }, 7000)
                 </script>
             @endif
 
