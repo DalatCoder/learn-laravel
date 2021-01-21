@@ -20,3 +20,11 @@ Route::get('/', function () {
 
 Route::get('/todos', [TodosController::class, 'index']);
 Route::get('/todos/{todoId}', [TodosController::class, 'show']);
+
+// Display form to creating new task
+Route::get('/new-todo', [TodosController::class, 'create']);
+
+// Actually save new task to the database
+Route::post('/store-todo', [TodosController::class, 'store']);
+
+
