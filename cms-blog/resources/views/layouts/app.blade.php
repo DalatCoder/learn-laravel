@@ -81,22 +81,35 @@
     <main class="py-4">
 
         <div class="container">
+
+            @if(session()->has('success'))
+                <div class="alert alert-success" id="flash-message">
+                    {{ session()->get('success') }}
+                </div>
+
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('flash-message').style.display = 'none';
+                    }, 3000)
+                </script>
+            @endif
+
             @auth
-            <div class="row">
-                <div class="col-md-4">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="#">Posts</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="#">Categories</a>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="#">Posts</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Categories</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8">
+                        @yield('content')
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    @yield('content')
-                </div>
-            </div>
             @else
                 @yield('content')
             @endauth

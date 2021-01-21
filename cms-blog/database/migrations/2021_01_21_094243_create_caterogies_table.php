@@ -13,7 +13,7 @@ class CreateCaterogiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('caterogies', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateCaterogiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caterogies');
+        Schema::dropIfExists('categories');
     }
 }

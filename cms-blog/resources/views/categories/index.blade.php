@@ -6,5 +6,24 @@
     </div>
     <div class="card">
         <div class="card-header">Categories</div>
+        <div class="card-body">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($categories as $category)
+                    <tr>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->name }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+
+        </div>
     </div>
 @endsection
