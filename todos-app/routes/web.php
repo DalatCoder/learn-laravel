@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/todos', [TodosController::class, 'index']);
-Route::get('/todos/{todoId}', [TodosController::class, 'show']);
+Route::get('/todos/{todo}', [TodosController::class, 'show']);
 
 // Display form to creating new task
 Route::get('/new-todo', [TodosController::class, 'create']);
@@ -27,8 +27,8 @@ Route::get('/new-todo', [TodosController::class, 'create']);
 // Actually save new task to the database
 Route::post('/store-todo', [TodosController::class, 'store']);
 
-Route::get('/todos/{todoId}/edit', [TodosController::class, 'edit']);
+Route::get('/todos/{todo}/edit', [TodosController::class, 'edit']);
 Route::post('/update-todo', [TodosController::class, 'update']);
 
-Route::get('/todos/{todoId}/delete', [TodosController::class, 'destroy']);
+Route::get('/todos/{todo}/delete', [TodosController::class, 'destroy']);
 
