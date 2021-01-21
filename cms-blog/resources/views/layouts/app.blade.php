@@ -90,7 +90,7 @@
                 <script>
                     setTimeout(() => {
                         document.getElementById('flash-message').style.display = 'none';
-                    }, 7000)
+                    }, 3000)
                 </script>
             @endif
 
@@ -102,7 +102,7 @@
                                 <a href="#">Posts</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#">Categories</a>
+                                <a href="{{ route('categories.index') }}">Categories</a>
                             </li>
                         </ul>
                     </div>
