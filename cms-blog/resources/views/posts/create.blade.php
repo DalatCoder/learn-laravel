@@ -10,19 +10,19 @@
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" id="title" autocomplete="off" placeholder="Title" name="title"
-                           class="form-control">
+                           class="form-control" value="{{ old('title') }}">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" id="description" autocomplete="off" placeholder="Description" name="description"
-                           class="form-control">
+                           class="form-control" value="{{ old('description') }}">
                 </div>
 
                 <div class="form-group">
                     <label for="content">Content</label>
                     <textarea name="content" id="content" cols="" rows="10" placeholder="Content"
-                              class="form-control"></textarea>
+                              class="form-control">{{ old('content') }}</textarea>
                 </div>
 
                 <div class="form-group">
@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="file" name="image" id="image" class="form-control">
+                    <input type="file" name="image" id="image" class="form-control" value="{{ old('image') }}">
                 </div>
 
                 <div class="form-group">

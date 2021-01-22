@@ -16,4 +16,4 @@ class Post extends Model
         'image',
         'published_at'
     ];
-} 
+}
