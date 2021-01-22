@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Posts\CreatePostRequest;
+use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class PostsController extends Controller
 {
@@ -33,12 +37,27 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param CreatePostRequest $request
+     * @return Application|RedirectResponse|Response|Redirector
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        //
+        // Upload the image
+        $image = $request->image->store('posts');
+
+        // Create the post
+        Post::create([
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'content' => $request->get('content'),
+            'image' => $image
+        ]);
+
+        // Flash message
+        session()->flash('success', 'Post created successfully');
+
+        // Redirect user
+        return redirect(route('posts.index'));
     }
 
     /**

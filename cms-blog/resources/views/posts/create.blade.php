@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">Create new post</div>
         <div class="card-body">
-            <form action="{{ route('posts.store') }}" method="POST">
+            <form action="{{ route('posts.store') }}" method="POST"  enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">
@@ -41,11 +41,4 @@
             </form>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <script>
-        document.getElementById('published_at').value = Date.now();
-        console.log(document.getElementById('published_at'));
-    </script>
 @endsection
