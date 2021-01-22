@@ -23,11 +23,11 @@ class PostsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
