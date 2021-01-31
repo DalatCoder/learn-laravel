@@ -339,3 +339,4 @@ Dữ liệu trả về là số dòng bị xóa sau khi thực hiện câu lện
 
 <hr>
 
+## 7. Eloquent ORM
