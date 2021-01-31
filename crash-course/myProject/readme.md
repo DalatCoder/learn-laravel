@@ -262,3 +262,80 @@ php artisan migrate:status
 ### 5.7 Tài liệu tham khảo
 [Laravel Database Migrations | Laravel v 5.2](https://laravel.com/docs/5.2/migrations)
 
+<hr>
+
+## 6. Tạo query với Laravel | Raw SQL Query
+> Tạo các truy vấn SQL thông qua lớp đối tượng DB sử dụng công nghệ PDO
+
+### 6.1 Create
+```phpt
+Route::get('/insert', function () {
+
+    DB::insert('INSERT INTO posts(title, body) VALUES (?, ?)', [
+        'PHP with Laravel',
+        'Laravel is so awesome!'
+    ]);
+
+});
+```
+Khi người dùng truy cập vào địa chỉ ```/insert```, hàm ```closure``` sẽ được chạy. Phương thức tĩnh với tên gọi ```insert``` thuộc lớp đối tượng ```DB``` sẽ được gọi với câu truy vấn tương ứng.
+Sau khi kết thúc câu lệnh, 1 bản ghi mới sẽ được thêm vào MySQL.
+
+Phương thức ```insert``` sử dụng công nghệ ```PDO``` để tạo và thực thi câu truy vấn.
+
+### 6.2 Read
+```phpt
+Route::get('/read', function () {
+
+    $results = DB::select('SELECT * FROM posts');
+    dd($results);
+    
+});
+```
+Dữ liệu trả về là 1 mảng kết quả, được lưu trữ vào biến ```$results```. Với mỗi bản ghi được biến đổi thành 1 đối tượng.
+Trong đoạn code trên, dữ liệu trả về có dạng như sau:
+```phpt
+array:1 [
+  0 => {
+    "id": 1
+    "title": "PHP with Laravel"
+    "body": "Laravel is so awesome!"
+    "created_at": null
+    "updated_at": null
+    "is_public": 0
+  }
+]
+```
+
+### 6.3 Update
+```phpt
+Route::get('/update', function () {
+
+    $numberOfRowsEffected = DB::update("UPDATE posts SET title = 'Updated title', body = 'Updated body' WHERE id = ?", [
+        1
+    ]);
+    dd($numberOfRowsEffected);
+    
+});
+```
+Dữ liệu trả về là số dòng bị tác động sau khi thực hiện câu lệnh. Trong ví dụ trên, phương thức ```update```
+trả về số dòng bị tác động = ```1```.
+
+### 6.4 Delete
+```phpt
+Route::get('/delete', function () {
+
+    $numberOfRowsEffected = DB::delete('DELETE FROM posts WHERE id = ?', [
+        1
+    ]);
+    dd($numberOfRowsEffected);
+
+});
+```
+Dữ liệu trả về là số dòng bị xóa sau khi thực hiện câu lệnh. Trong ví dụ trên, phương thức ```delete``` trả về số dòng bị xóa = ```1```.
+
+### 6.5 Tài liệu tham khảo
+[Raw SQL Query | Laravel v 5.2](https://laravel.com/docs/5.2/database)
+
+<hr>
+
