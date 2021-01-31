@@ -99,7 +99,7 @@ Chương trình sẽ tự động tạo ra 1 danh sách Route tương ứng vớ
 ![List of resource routes](md_assets/route_resource_list.PNG)
 
 ### 2.6 Tài liệu tham khảo
-[HTTP Controllers | Laravel v 5.2](https://laravel.com/docs/5.2/controllers)
+[Controllers | Laravel v 5.2](https://laravel.com/docs/5.2/controllers)
 
 <hr>
 
@@ -156,7 +156,7 @@ Sử dụng biến trong blade:
 ```
 Ta có thể truy cập đến các biến được truyền vào bằng cách đặt tên biến tương ứng bên trong cụm ```{{ }}```.
 ### 3.3 Tài liệu tham khảo
-[HTTP Views | Laravel v 5.2](https://laravel.com/docs/5.2/views)
+[Views | Laravel v 5.2](https://laravel.com/docs/5.2/views)
 
 <hr>
 
@@ -164,3 +164,48 @@ Ta có thể truy cập đến các biến được truyền vào bằng cách �
 Template engine được sử dụng trong Laravel.
 
 ### 4.1 Master layout
+Trang được dùng chung cho tất cả các trang web khác, thường đặt tên là ```app.blade.php```.
+
+Dùng từ khóa ```@yield``` để tạo ra 1 ```placeholder``` để các trang khác chèn dữ liệu vào. Ví dụ về master page:
+```phpt
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Laravel</title>
+</head>
+<body>
+<div class="container">
+    <div class="content">
+        @yield('content')
+    </div>
+</div>
+
+@yield('script')
+</body>
+</html>
+```
+Ở ví dụ trên, ta tạo ra 2 ```placeholder```:
+* ```content```: chèn nội dung
+* ```script```: chèn đoạn script
+
+Các trang blade khác tiến hành kế thừa từ trang master layout và chèn dữ liệu tương ứng vào.
+```phpt
+@extends('layouts.app')
+
+@section('content')
+    <h1>Post detail page for post with id of {{ $id }}</h1>
+    <p>{{ $title }}</p>
+    <p>{{ $author }}</p>
+@endsection
+
+@section('script')
+    <script>
+        console.log('Post detail page');
+    </script>
+@endsection
+```
+Ở ví dụ trên, ```@extends``` thể hiện rằng ta sẽ tạo 1 trang mới từ việc mở rộng template có sẵn tên là ```app``` nằm trong thư mục ```layouts```.
+Tiếp đến, ta dùng ```@section``` và tên tương ứng từ chỉ thị ```@yield``` ở layout app để tiến hành chèn nội dung vào.
+
+### 4.2 Tài liệu tham khảo
+[Blade Template Engine | Laravel v 5.2](https://laravel.com/docs/5.2/blade)
