@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/posts/{id}', function ($id) {
+    return "Post with id: " . $id;
+});
+
+Route::get('/admin/posts/thisisalongurl', array('as' => 'admin.posts',  function () {
+
+    $url = route('admin.posts');
+
+    return 'This url is posts admin page, ' . $url;
+}));

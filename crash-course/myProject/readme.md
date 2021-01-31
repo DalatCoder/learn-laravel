@@ -1,27 +1,40 @@
-# Laravel PHP Framework
+# HỌC LARAVEL CƠ BẢN - EDWIN DIAZ
+## 1. Routes
+* Địa chỉ URL trên thanh trình duyệt
+* Dùng thông qua class Route và các phương thức static:
+    * get
+    * post 
+    * ...
+    
+* Ví dụ:
+    ```phpt
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    ```
+  Khi truy cập đến địa chỉ root, hàm closure được gọi và trả về view tương ứng.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+### 1.1 Truyền tham số trên địa chỉ URL
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+```phpt
+Route::get('/posts/{id}', function ($id) {
+    return "Post with id: " . $id;
+});
+```
+Ví dụ với resource posts, khi cần truy cập tới 1 bài post cụ thể, ta truyền thêm tham số id của bài post vào địa chỉ URI. Tham số id này được tự động truyền vào hàm closure để ta có thể sử dụng ngay.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+### 1.2 Đặt tên cho route | Naming Routes
+```phpt
+Route::get('/admin/posts/thisisalongurl', array('as' => 'admin.posts',  function () {
 
-## Official Documentation
+    $url = route('admin.posts');
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+    return 'This url is posts admin page, ' . $url;
+}));
+```
+Thay vì phải ghi nhớ địa chỉ URI dài loằng ngoằng như */admin/posts/thisisalongurl*, chúng ta có thể tạo nickname cho nó. Chẳng hạn trong đoạn code trên, ta thay thế địa chỉ URI ban đầu với tên gọi ngắn hơn là admin.posts, để truy cập đến địa chỉ URL nguyên bản, ta dùng phương thức **route()** có sẵn.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Ví dụ khi sử dụng naming route trong thẻ ```<a>```:
+```phpt
+<a href="route(admin.posts)">Go to admin posts page</a>
+```
