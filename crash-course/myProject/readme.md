@@ -89,4 +89,14 @@ Trong ví dụ trên, khi người dùng truy cập vào URI: ```/posts```, phư
   }
   ```
   
-###2. 5 Controller với Resources
+###2. 5 Route với Resources
+Ta khai báo route như sau:
+```phpt
+Route::resource('/posts', 'PostsController');
+```
+Chương trình sẽ tự động tạo ra 1 danh sách Route tương ứng với các phương thức tương ứng trong controller ```PostsController```:
+
+![List of resource routes](md_assets/route_resource_list.PNG)
+
+### 2.6 Tài liệu tham khảo
+[HTTP Controllers | Laravel v 5.2](https://laravel.com/docs/5.2/controllers)
