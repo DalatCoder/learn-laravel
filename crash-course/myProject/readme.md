@@ -100,3 +100,5 @@ Chương trình sẽ tự động tạo ra 1 danh sách Route tương ứng vớ
 
 ### 2.6 Tài liệu tham khảo
 [HTTP Controllers | Laravel v 5.2](https://laravel.com/docs/5.2/controllers)
+
+## 3. Views
