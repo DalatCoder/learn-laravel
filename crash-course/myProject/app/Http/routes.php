@@ -11,6 +11,10 @@
 |
 */
 
-Route::resource('/posts', 'PostsController');
+use Illuminate\Support\Facades\DB;
 
-Route::get('/contact', 'PostsController@contact');
+Route::get('/insert', function () {
+
+    DB::insert();
+
+});
