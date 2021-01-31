@@ -224,3 +224,41 @@ Dùng câu lệnh có sẵn từ ```php artisan```:
 ```phpt
 php artisan migrate
 ```
+Sau khi thực hiện câu lệnh trên, các bảng tương ứng sẽ được tự động tạo vào cơ sở dữ liệu ```MySQL```.
+
+### 5.3 Tạo mới migration
+Dùng câu lệnh có sẵn:
+```phpt
+php artisan make:migration create_posts_table --create="posts"
+```
+Sau khi thực hiện lệnh trên, 1 file migration mới sẽ được tạo ra tại đường dẫn ```/databases/migrations```
+và được tự động đặt tên như sau: ```2021_01_31_122445_create_posts_table.php```.
+
+### 5.3 Thêm cột mới vào bảng đã có sẵn
+Dùng trong trường hợp trong bảng đã có nhiều dữ liệu, ta không muốn xóa đi để migrate từ đầu, chỉ muốn thêm cột mới vào.
+
+Sử dụng câu lệnh có sẵn:
+```phpt
+php artisan make:migration add_status_column_to_posts_table --table="posts"
+```
+Sau khi thực hiện lệnh trên, 1 file migration mới sẽ được tạo ra tại đường dẫn ```/databases/migrations```
+và được tự động đặt tên như sau: ```2021_01_31_123649_add_status_column_to_posts_table.php```.
+
+### 5.4 Xóa tất cả các bảng
+```phpt
+php artisan migrate:reset
+```
+
+### 5.5 Xóa tất cả các bảng và chạy lại migration từ đầu
+```phpt
+php artisan migrate:refresh
+```
+
+### 5.6 Kiểm tra trạng thái migration
+```phpt
+php artisan migrate:status
+```
+
+### 5.7 Tài liệu tham khảo
+[Laravel Database Migrations | Laravel v 5.2](https://laravel.com/docs/5.2/migrations)
+
