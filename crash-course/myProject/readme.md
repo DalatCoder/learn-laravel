@@ -157,3 +157,10 @@ Sử dụng biến trong blade:
 Ta có thể truy cập đến các biến được truyền vào bằng cách đặt tên biến tương ứng bên trong cụm ```{{ }}```.
 ### 3.3 Tài liệu tham khảo
 [HTTP Views | Laravel v 5.2](https://laravel.com/docs/5.2/views)
+
+<hr>
+
+## 4. Laravel Blade template engine
+Template engine được sử dụng trong Laravel.
+
+### 4.1 Master layout
