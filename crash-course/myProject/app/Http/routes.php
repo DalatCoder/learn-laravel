@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Route::get('/posts/{id}', function ($id) {
     return "Post with id: " . $id;
-});
+})
+    ->where('id', '[0-9]+');
 
 Route::get('/admin/posts/thisisalongurl', array('as' => 'admin.posts',  function () {
 
