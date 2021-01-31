@@ -101,4 +101,59 @@ Chương trình sẽ tự động tạo ra 1 danh sách Route tương ứng vớ
 ### 2.6 Tài liệu tham khảo
 [HTTP Controllers | Laravel v 5.2](https://laravel.com/docs/5.2/controllers)
 
+<hr>
+
 ## 3. Views
+View nằm trong đường dẫn /resources/views. Laravel sử dụng blade làm template engine.
+
+Controller trả về view tương ứng.
+
+### 3.1 Hiển thị view
+Trong ví dụ sau, người dùng truy cập đến trang contact: ```/contact```, chương trình sẽ gọi phương thức ```contact``` trong controller ```PostsController```. Phương thức ```contact``` sẽ như thế này:
+
+```phpt
+public function contact()
+{
+    return view('contact');
+}
+```
+
+### 3.2 Truyền dữ liệu vào view
+Ta có thể truyền dữ liệu vào view thông qua các cách như sau:
+1. Dùng phương thức ```with```:
+   ```phpt
+    public function show($id)
+    {
+        $title = 'Amazing post';
+        $author = 'Trong Hieu';
+
+        return view('post')->with('id', $id);
+    } 
+   ```
+2. Dùng hàm ```compact```:
+    ```phpt
+    public function show($id)
+    {
+        $title = 'Amazing post';
+        $author = 'Trong Hieu';
+
+        return view('post', compact('id', 'title', 'author'));
+    }
+    ```
+   Dùng hàm ``compact``, ta có thể nhanh chóng truyền nhiều dữ liệu vào ```view``` 1 cách nhanh chóng. Dữ liệu truyền vào sẽ theo dạng *name - variable*, nếu name trùng tên với variable thì ta có thể rút gọn. Ở ví dụ trên, chuỗi ```'id'``` tương ứng với biến ```$id```
+   
+Sử dụng biến trong blade:
+```phpt
+<body>
+  <div class="container">
+      <div class="content">
+          <h1>Post detail page for post with id of {{ $id }}</h1>
+          <p>{{ $title }}</p>
+          <p>{{ $author }}</p>
+      </div>
+  </div>
+</body>
+```
+Ta có thể truy cập đến các biến được truyền vào bằng cách đặt tên biến tương ứng bên trong cụm ```{{ }}```.
+### 3.3 Tài liệu tham khảo
+[HTTP Views | Laravel v 5.2](https://laravel.com/docs/5.2/views)

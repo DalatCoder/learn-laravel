@@ -47,7 +47,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        return 'Specific post with id of ' . $id;
+        $title = 'Amazing post';
+        $author = 'Trong Hieu';
+
+        // return view('post')->with('id', $id);
+        return view('post', compact('id', 'title', 'author'));
     }
 
     /**
