@@ -50,14 +50,43 @@ Ví dụ khi sử dụng naming route trong thẻ ```<a>```:
 ## 2. Controllers
 Class trung gian giữa Model và View trong mô hình MVC. Controller đóng vai trò nhận dữ liệu tương ứng từ Database thông qua class ở Model và truyền dữ liệu vừa nhận được vào View để hiển thị lên màn hình.
 
+### 2.1 Tạo controller
 Tạo controller nhanh chóng thông qua ```php artisan```:
 
 ```php artisan make:controller PostsController```
 
 Mở terminal và gõ câu lệnh trên, sau đó 1 controller sẽ được tự động tạo ra với tên gọi PostsController.php
 
+### 2.2 Tạo controller nhanh tương ứng thao tác CRUD
 Với 1 số controller thực hiện thao tác CRUD, ta có thể nhanh chóng tạo ra controller với các phương thức có sẵn thông qua câu lệnh như sau:
 
 ```php artisan make:controller --resource PostsController```
 
 Sau khi kết thúc câu lệnh, ta sẽ có 1 controller với tên gọi PostsController và các phương thức được định nghĩa sẵn
+
+### 2.3 Route sử dụng controller
+Khi đã tạo controller, lúc này ta có thể khai báo các route như sau:
+
+```phpt
+Route::get('/posts', 'PostsController@index');
+```
+
+Trong ví dụ trên, khi người dùng truy cập vào URI: ```/posts```, phương thức ```index()``` bên trong class ```PostsController``` sẽ được gọi. 
+
+### 2.4 Truyền tham số từ URI vào Controller
+* Route được khai báo như sau:
+
+  ```
+  Route::get('/posts/{id}', 'PostsController@show');
+  ```
+
+
+* Phương thức ```show()``` của class ```PostsController``` sẽ được thiết kế để nhận vào tham số ```id```:
+  ```phpt
+  public function show($id)
+  {
+      return 'Specific post with id of ' . $id;
+  }
+  ```
+  
+###2. 5 Controller với Resources

@@ -11,11 +11,11 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function index()
     {
-        //
+        return 'Posts index page';
     }
 
     /**
@@ -43,11 +43,11 @@ class PostsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function show($id)
     {
-        //
+        return 'Specific post with id of ' . $id;
     }
 
     /**

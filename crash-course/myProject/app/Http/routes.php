@@ -11,18 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/posts/{id}', function ($id) {
-    return "Post with id: " . $id;
-})
-    ->where('id', '[0-9]+');
-
-Route::get('/admin/posts/thisisalongurl', array('as' => 'admin.posts',  function () {
-
-    $url = route('admin.posts');
-
-    return 'This url is posts admin page, ' . $url;
-}));
+Route::get('/posts', 'PostsController@index');
+Route::get('/posts/{id}', 'PostsController@show');
