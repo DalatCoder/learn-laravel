@@ -1,6 +1,6 @@
 # HỌC LARAVEL CƠ BẢN - EDWIN DIAZ
 ## 1. Routes
-* Địa chỉ URL trên thanh trình duyệt
+> Địa chỉ URL trên thanh trình duyệt
 * Dùng thông qua class Route và các phương thức static:
     * get
     * post 
@@ -48,7 +48,7 @@ Ví dụ khi sử dụng naming route trong thẻ ```<a>```:
 <hr>
 
 ## 2. Controllers
-Class trung gian giữa Model và View trong mô hình MVC. Controller đóng vai trò nhận dữ liệu tương ứng từ Database thông qua class ở Model và truyền dữ liệu vừa nhận được vào View để hiển thị lên màn hình.
+> Class trung gian giữa Model và View trong mô hình MVC. Controller đóng vai trò nhận dữ liệu tương ứng từ Database thông qua class ở Model và truyền dữ liệu vừa nhận được vào View để hiển thị lên màn hình.
 
 ### 2.1 Tạo controller
 Tạo controller nhanh chóng thông qua ```php artisan```:
@@ -104,9 +104,8 @@ Chương trình sẽ tự động tạo ra 1 danh sách Route tương ứng vớ
 <hr>
 
 ## 3. Views
-View nằm trong đường dẫn /resources/views. Laravel sử dụng blade làm template engine.
-
-Controller trả về view tương ứng.
+> View nằm trong đường dẫn /resources/views. Laravel sử dụng blade làm template engine.
+> Controller trả về view tương ứng.
 
 ### 3.1 Hiển thị view
 Trong ví dụ sau, người dùng truy cập đến trang contact: ```/contact```, chương trình sẽ gọi phương thức ```contact``` trong controller ```PostsController```. Phương thức ```contact``` sẽ như thế này:
@@ -161,7 +160,7 @@ Ta có thể truy cập đến các biến được truyền vào bằng cách �
 <hr>
 
 ## 4. Laravel Blade template engine
-Template engine được sử dụng trong Laravel.
+> Template engine được sử dụng trong Laravel.
 
 ### 4.1 Master layout
 Trang được dùng chung cho tất cả các trang web khác, thường đặt tên là ```app.blade.php```.
@@ -209,3 +208,19 @@ Tiếp đến, ta dùng ```@section``` và tên tương ứng từ chỉ thị `
 
 ### 4.2 Tài liệu tham khảo
 [Blade Template Engine | Laravel v 5.2](https://laravel.com/docs/5.2/blade)
+
+<hr>
+
+## 5. Laravel Database Migration
+> Code First. Tạo các bảng trong cơ sở dữ liệu thông qua các tập tin migration được viết bằng code php.
+> Tất cả migration được lưu trữ tại đường dẫn ```/databases/migrations```.
+
+### 5.1 Chỉnh sửa cài đặt trong file ```.env```
+* Lưu trữ các thông tin quan trọng
+* Sử dụng file ```.env.example``` để làm ví dụ khi push lên github
+
+### 5.2 Thực hiện migration
+Dùng câu lệnh có sẵn từ ```php artisan```:
+```phpt
+php artisan migrate
+```
