@@ -655,3 +655,121 @@ Gọi phương thức `forceDelete()` trên phần tử trong thùng rác.
 [Eloquent | Laravel v 5.2](https://laravel.com/docs/5.2/eloquent)
 
 ## 8. Eloquent ORM | Eloquent Relationships
+### 8.1 Quan hệ 1 - 1
+Giả sử 1 người dùng chỉ có duy nhất 1 post, và 1 post chỉ thuộc về 1 người dùng.
+#### 8.1.1 Thêm trường `user_id` vào bảng `posts`
+```phpt
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePostsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->string('title');
+            $table->text('body');
+            $table->timestamps();
+        });
+    }
+
+   public function down()
+    {
+        Schema::drop('posts');
+    }
+}
+```
+
+#### 8.1.2 Thêm phương thức vào Model `User`
+```phpt
+<?php
+
+namespace App;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+   protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    public function post()
+    {
+        return $this->hasOne('App\Post', 'user_id');
+    }
+}
+```
+Phương thức `post` được gọi khi cần lấy `post` thuộc về người dùng.
+`Laravel` cung cấp phương thức `hasOne` để chỉ định mối quan hệ 1 - 1. Tham số đầu tiên truyền vào
+là Model có mối quan hệ, tham số thứ 2 xác định trường nào dùng để thiết lập quan hệ.
+
+#### 8.1.3 Khai báo route và kiểm tra kết quả
+```phpt
+Route::get('/user/{id}/post', function ($id) {
+
+    $user = \App\User::find($id);
+
+    $post = $user->post;
+    dd($post);
+
+});
+```
+Kết quả trả về là bài `post` duy nhất tương ứng với `id` của người dùng.
+
+### 8.2 The inverse relationship
+> Trong mối quan hệ 1 - 1, thay vì lấy 1 bài `post` thông qua `id` người dùng, thì lúc này, ta có `id` bài post, thông qua `id` này, ta muốn biết người dùng nào đang sở hữu bài post.
+
+#### 8.2.1 Thêm phương thức vào Model `Post`
+```phpt
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Post extends Model
+{
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    protected $table = 'posts';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+      'title',
+      'body'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+}
+```
+Phương thức `user` xác định 1 `post` sẽ thuộc về 1 `user`.
+
+#### 8.2.2 Khai báo route và kiểm tra kết quả
+```phpt
+Route::get('/post/{id}/user', function ($id) {
+
+    $post = \App\Post::find($id);
+
+    $user = $post->user;
+    dd($user);
+
+});
+```
+Lúc này, ta sẽ tìm kiếm `$post` dựa trên `$id` được truyền vào. 
+Sau đó ta tiến hành gọi đến thuộc tính `user` để lấy được người dùng tương ứng với `$post` này.
+

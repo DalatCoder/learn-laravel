@@ -13,5 +13,21 @@
 
 use Illuminate\Support\Facades\DB;
 
+Route::get('/user/{id}/post', function ($id) {
 
+    $user = \App\User::find($id);
+
+    $post = $user->post;
+    dd($post);
+
+});
+
+Route::get('/post/{id}/user', function ($id) {
+
+    $post = \App\Post::find($id);
+
+    $user = $post->user;
+    dd($user);
+
+});
 
