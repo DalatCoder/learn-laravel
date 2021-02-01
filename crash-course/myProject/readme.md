@@ -653,3 +653,5 @@ Gọi phương thức `forceDelete()` trên phần tử trong thùng rác.
 
 ### 7.6 Tài liệu tham khảo
 [Eloquent | Laravel v 5.2](https://laravel.com/docs/5.2/eloquent)
+
+## 8. Eloquent ORM | Eloquent Relationships
