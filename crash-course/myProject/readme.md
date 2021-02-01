@@ -340,3 +340,316 @@ Dữ liệu trả về là số dòng bị xóa sau khi thực hiện câu lện
 <hr>
 
 ## 7. Eloquent ORM
+> Hỗ trợ thao tác cơ sở dữ liệu thông qua các phương thức được cung cấp sẵn của lớp Model
+
+### 7.1 Tạo model mới
+Sử dụng câu lệnh có sẵn:
+```phpt
+php artisan make:model Post
+```
+Sau khi thực hiện câu lệnh trên, 1 class sẽ được tạo ra tại đường dẫn ```/app``` và được đặt tên ```Post.php```.
+
+Class này kế thừa từ lớp ```Model```, có hình dạng như sau:
+```phpt
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    //
+}
+```
+Model ```Post``` này mặc định sẽ là ánh xạ tương ứng của 1 bảng tên là ```posts``` bên trong cơ sở dữ liệu.
+Trong trường hợp, bảng trong cơ sở dữ liệu có tên khác với Model, ta có thể override thuộc tính trong model để chỉ định rõ tên bảng mà model ánh xạ tới. 
+Cú pháp sẽ như sau: 
+```phpt
+protected $table = 'my_table'
+```
+Tương tự như vậy, model này cũng mặc định khóa chính trong bảng được đặt tên là ```id```.
+Trong trường hợp khóa chính có tên khác, ta cũng có thể override thuộc tính. Cú pháp như sau:
+```phpt
+protected $primaryKey = 'my_primary_key'
+```
+
+### 7.2 Read
+* **Đọc tất cả bản ghi**
+```phpt
+Route::get('/read', function () {
+
+   $posts = \App\Post::all();
+   dd($posts);
+   
+});
+```
+Trong đoạn mã phía trên, khi người dùng truy cập vào địa chỉ ```/read```, phương thức tĩnh có tên ```all``` được định nghĩa trên Model ```Post``` sẽ được gọi.
+Kết quả trả về là 1 mảng các đối tượng, mỗi đối tượng ánh xạ với 1 bản ghi từ bảng có tên ```posts``` trong cơ sở dữ liệu.
+  
+* **Tìm kiếm 1 bản ghi theo khóa chính**
+```phpt
+Route::get('/find/{id}', function ($id) {
+
+    $post = \App\Post::find($id);
+    dd($post);
+
+});
+```
+Trong đoạn mã phía trên, khi người dùng truy cập vào ```/find/1```, phương thức tĩnh có tên `find` được định nghĩa trên Model `Post` sẽ được thực thi cùng với khóa chính là giá trị của biến ```$id``` được truyền thông qua URI tham số.
+Kết quả trả về là đối tượng tương ứng với khóa chính được truyền vào, hoặc `null` nếu không tìm thấy kết quả.
+  
+* **Tìm kiếm bản ghi theo điều kiện**
+```phpt
+Route::get('/where/private', function () {
+
+    $posts = \App\Post::where('is_public', 0)->orderBy('id', 'desc')->take(5)->get();
+    dd($posts);
+
+});
+```
+Trong đoạn mã phía trên, khi chương trình sẽ lấy tất cả các Post chưa được xuất bản, sau đó sắp xếp giảm dần theo ```id```, chỉ định lấy 5 phần tử đầu tiên và cuối cùng chaining phương thức ```get``` để lấy về dữ liệu.
+Kết quả trả về là 1 mảng các đối tượng, với mỗi đối tượng tương ứng với 1 bản ghi trong cơ sở dữ liệu. Nếu không có kết quả, hàm `count($posts)` trả về giá trị 0.
+
+### 7.3 Create
+* **Phương thức `save()`**
+```phpt
+Route::get('/insert', function () {
+
+    $post = new \App\Post();
+
+    $post->title = 'New ORM post';
+    $post->body = 'Eloquent is awesome';
+
+    $result = $post->save();
+
+    dd($result);
+
+});
+```
+Phương thức `save()` có thể được dùng để tạo mới 1 bản ghi, trong trường hợp này, ta tạo 1 `instance` từ model `Post`.
+Sau đó gán các giá trị tương ứng và thực hiện gọi phương thức `save()`. Phương thức này trả về kết quả dạng `boolean`. 
+* `true`: chèn thành công
+* `false`: chèn thất bại
+
+(*Giữ phím `Ctrl` và click chuột vào phương thức `save` khi code trên PhpStorm để xem cách viết phương thức này*).
+
+```phpt
+Route::get('/insert/{id}', function ($id) {
+
+    $post = \App\Post()::find($id);
+
+    $post->title = 'New ORM post';
+    $post->body = 'Eloquent is awesome';
+
+    $result = $post->save();
+
+    dd($result);
+
+});
+```
+Phương thức `save()` còn được dùng để cập nhật bản ghi, trong trường hợp ta gọi phương thức `save()` trên bản ghi đã tồn tại (khóa chính đã tồn tại), 
+phương thức này sẽ tự động cập nhật bản ghi này.
+
+* Phương thức `create()`
+> Được dùng phổ biến khi thao tác với `form`
+
+```phpt
+Route::get('/create', function () {
+
+    $newPost = \App\Post::create([
+       'title' => 'Laravel with Eloquent ORM',
+       'body' => 'WOWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW'
+    ]);
+
+    dd($newPost);
+    
+});
+```
+Mặc định, `Laravel` sẽ không cho phép chương trình tạo mới dữ liệu do lo ngại vấn đề bảo mật.
+Để chỉ rõ cho `Laravel` biết việc thêm mới dữ liệu sẽ an toàn, ta cần cấu hình lại chức năng `MassAssignment`.
+
+Ta cấu hình lại thông qua việc `override` thuộc tính `$fillable` ở Model `Post`:
+```phpt
+class Post extends Model
+{
+    protected $table = 'posts';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+      'title',
+      'body'
+    ];
+}
+```
+Kết quả trả về từ phương thức `create()` là 1 `instance` mới của Model `Post`, được tạo ra từ mảng dữ liệu mà ta truyền vào.
+
+### 7.4 Update
+> Ta có thể `update` 1 bản ghi thông qua phương thức `save()`, đây là cách thường dùng.
+> Tuy nhiên, Laravel cũng cung cấp 1 phương thức riêng cho việc `update` dữ liệu
+
+```phpt
+Route::get('/update/{id}', function ($id) {
+
+    $result = \App\Post::find($id)->update([
+        'title' => 'Updated title for post with id of ' . $id,
+        'body' => 'Updated body for post with id of ' . $id
+    ]);
+    dd($result);
+
+});
+```
+Trong đoạn mã phía trên, chương trình tìm ra bản ghi tương ứng với `$id` truyền vào, sau đó thực hiện phương thức `update` trên đối tượng tìm được.
+Kết quả trả về có dạng `boolean`:
+* `true`: cập nhật thành công
+* `false`: có lỗi trong quá trình cập nhật
+
+### 7.5 Delete
+* Xóa 1 bản ghi
+```phpt
+Route::get('/delete/{id}', function ($id) {
+
+    $post = \App\Post::find($id);
+    $post->delete();
+
+});
+```
+Tìm bản ghi tương ứng với `$id` truyền vào, sau đó gọi phương thức `delete()` trên đối tượng tìm được.
+Bùm, bản ghi bay màu.
+
+* Xóa nhiều bản ghi
+```phpt
+Route::get('/deletemany', function () {
+    
+    \App\Post::destroy([1, 2, 3]);
+    
+});
+```
+Gọi phương thức tĩnh `destroy` trên Model và truyền vào 1 mảng với mỗi phần từ là `id` của bản ghi cần xóa.
+
+* Xóa nhiều bản ghi với phương thức `where()`
+```phpt
+Route::get('/deletewhere', function () {
+   
+    \App\Post::where('is_public', 0)->delete();
+    
+});
+```
+Phương thức `where()` tìm ra danh sách các Post chưa được xuất bản, sau đó ta gọi phương thức `delete` trên kết quả trả về để tiến hành xóa bỏ khỏi cơ sở dữ liệu.
+
+### 7.5 Trashing 
+> Xóa tạm thời, đưa vào thùng rác khi không cần hoặc móc từ thùng rác ra, restore về trạng thái ban đầu khi cần dùng.
+
+#### 7.5.1 Sử dụng `SoftDeletes` trong Model `Post`
+```phpt
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Post extends Model
+{
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+    
+    protected $table = 'posts';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+      'title',
+      'body'
+    ];
+}
+```
+
+Ta sử dụng `SoftDeletes`, đồng thời khai báo thêm 1 biến tên `deleted_at` để lưu giữ trạng thái của Model.
+* `deleted_at == null`: bản ghi đang hoạt động bình thường
+* `deleted_at != null`: bản ghi hiện tại đang trong thùng rác
+
+#### 7.5.2 Tạo migration mới
+* Tiếp đó, ta tiến hành tạo 1 migration mới để thêm cột `'deleted_at'` vào bảng.
+```phpt
+php artisan make:migration add_deleted_at_column_to_posts_table --table="posts"
+```
+Lúc này, migration mới được tạo ra sẽ có dạng như sau:
+```phpt
+class AddDeletedAtColumnToPostsTable extends Migration
+{
+    public function up()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
+    }
+}
+```
+
+#### 7.5.3 Tạo route mới và test thử
+```phpt
+Route::get('/softdelete/{id}', function ($id) {
+
+    $post = \App\Post::find($id);
+    $post->delete();
+
+});
+```
+Ta tiến hành khai báo route và truyền `id` của post cần xóa vào. Sau đó gọi phương thức `delete` trên kết quả tìm được. Lúc này, phương thức `delete` sẽ không xóa bỏ hoàn toàn bản ghi trong cơ sở dữ liệu, mà chỉ đơn giản đặt giá trị `timestamp` tương ứng cho cột `deleted_at`.
+
+Khi ta dùng phương thức `all()` để lấy tất cả bản ghi, ta chỉ lấy được những bản ghi có giá trị cột `deleted_at == null`, tức là chưa bị đưa vào thùng rác. 
+
+#### 7.5.4 Lấy các phần tử trong thùng rác
+```phpt
+Route::get('/readsoftdelete', function () {
+
+    $trashedPosts = \App\Post::onlyTrashed()->get();
+    dd($trashedPosts);
+
+});
+```
+Chỉ những phần tử trong thùng rác.
+
+#### 7.5.5 Lấy tất cả phần tử, bao gồm trong thùng rác
+```phpt
+Route::get('/readsoftdelete', function () {
+
+    $trashedPosts = \App\Post::withTrashed()->get();
+    dd($trashedPosts);
+
+});
+```
+Lấy tất cả các phần tử, bao gồm cả các phần tử đang trong thùng rác.
+
+#### 7.5.6 Móc phần tử từ thùng rác ra
+```phpt
+Route::get('/restore/{id}', function ($id) {
+
+    $posts = \App\Post::onlyTrashed()->where('id', $id)->get();
+    $posts[0]->restore();
+
+});
+```
+Gọi phương thức `restore()` trên phần tử nằm trong thùng rác. Sau khi phương thức được thực thi, giá trị trong cột `created_at` sẽ được đặt bằng `null`.
+
+#### 7.5.7 Xóa vĩnh viễn
+```phpt
+Route::get('/forcedelete/{id}', function ($id) {
+
+    $posts = \App\Post::onlyTrashed()->where('id', $id)->get();
+    $posts[0]->forceDelete();
+
+});
+```
+Gọi phương thức `forceDelete()` trên phần tử trong thùng rác.
+
+### 7.6 Tài liệu tham khảo
+[Eloquent | Laravel v 5.2](https://laravel.com/docs/5.2/eloquent)
