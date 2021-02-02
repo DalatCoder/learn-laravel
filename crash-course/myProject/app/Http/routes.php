@@ -31,3 +31,23 @@ Route::get('/post/{id}/user', function ($id) {
 
 });
 
+Route::get('/user/{id}/posts', function ($id) {
+
+    $user = \App\User::find($id);
+
+    $posts = $user->posts;
+    dd($posts);
+
+});
+
+Route::get('/user/{id}/role', function ($id) {
+
+    $user = \App\User::find($id);
+    $roles = $user->roles()->get();
+
+    dd($roles);
+
+});
+
+
+

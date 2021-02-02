@@ -655,6 +655,8 @@ Gọi phương thức `forceDelete()` trên phần tử trong thùng rác.
 [Eloquent | Laravel v 5.2](https://laravel.com/docs/5.2/eloquent)
 
 ## 8. Eloquent ORM | Eloquent Relationships
+> Laravel cung cấp chức năng `function as property`, cẩn thận khi khai báo các phương thức xác định quan hệ trong model.
+
 ### 8.1 Quan hệ 1 - 1
 Giả sử 1 người dùng chỉ có duy nhất 1 post, và 1 post chỉ thuộc về 1 người dùng.
 #### 8.1.1 Thêm trường `user_id` vào bảng `posts`
@@ -773,3 +775,134 @@ Route::get('/post/{id}/user', function ($id) {
 Lúc này, ta sẽ tìm kiếm `$post` dựa trên `$id` được truyền vào. 
 Sau đó ta tiến hành gọi đến thuộc tính `user` để lấy được người dùng tương ứng với `$post` này.
 
+### 8.3 Quan hệ 1 - nhiều
+> Giả sử 1 người dùng có thể có nhiều bài post
+
+#### 8.3.1 Thêm trường dữ liệu trong bảng `posts`
+```phpt
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePostsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->string('title');
+            $table->text('body');
+            $table->timestamps();
+        });
+    }
+
+   public function down()
+    {
+        Schema::drop('posts');
+    }
+}
+```
+Trường `user_id` chỉ định 1 bài `post` chỉ thuộc về 1 người dùng, tuy nhiên 1 người dùng có thể có 1 hoặc nhiều bài post.
+
+#### 8.3.2 Thêm phương thức vào Model `user`
+```phpt
+<?php
+
+namespace App;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post', 'user_id');
+    }
+}
+```
+Phương thức ```posts``` dùng để lấy dữ liệu tất cả bài post liên quan đến người dùng.
+`Laravel` cung cấp phương thức `hasMany` để chỉ định rằng đây là mối quan hệ 1 - nhiều.
+Tham số đầu tiên là Model quan hệ, tham số thứ 2 là trường dữ liệu để tạo quan hệ.
+
+#### 8.3.3 Khai báo route và kiểm tra kết quả
+```phpt
+Route::get('/user/{id}/posts', function ($id) {
+
+    $user = \App\User::find($id);
+
+    $posts = $user->posts;
+    dd($posts);
+
+});
+```
+Ta tìm kiếm người dùng tương ứng theo `$id` truyền vào, sau đó gọi phương thức `posts` để lấy danh sách tất cả bài posts thuộc về người dùng này.
+
+> Lưu ý:
+> `Laravel` có cái gọi là `method as property`, vì vậy phương thức `posts` không được gọi như truyền thống. Mà chỉ cần trỏ tới như là 1 thuộc tính.
+
+### 8.4 Quan hệ nhiều - nhiều
+> Giả sử ta có mối quan hệ giữa `User` và `Role`. 1 `user` sẽ có thể có nhiều `role`, và 1 `role` cũng sẽ có 1 hoặc nhiều `user`.
+> Như vậy, ta sẽ có 3 bảng, 1 bảng chứa thông tin `user`, 1 bảng chứa thông tin `role`, và 1 bảng dùng để liên kết 2 bảng này lại, thường được gọi là 
+> `lookup table`. Trong `Laravel`, ta có khái niệm `pivot table`.
+
+#### 8.4.1 Tạo bảng `role`
+```phpt
+php artisan make:model Role -m
+```
+Câu lệnh phía trên tạo mới 1 Model có tên `Role`, đồng thời flag `-m` chỉ định `Laravel` tạo mới 1 `migration` dành cho bảng `roles`, migration này được 
+đặt tên là `create_roles_table`.
+
+#### 8.4.2 Tạo migration cho `pivot table`
+```phpt
+php artisan make:migration create_roles_users_table --create=role_user
+```
+**Chú ý:**
+* Câu lệnh trên dùng để tạo mới 1 `migration` cho `pivot table`
+* Cờ `--create` chỉ định tên của bảng `pivot`, `Laravel` quy ước cách đặt tên như sau:
+    * Bảng `pivot` này kết nối 2 bảng là `users` và `roles`
+    * Dạng danh từ số ít của 1 bảng này là `user` và `role`
+    * Sắp xếp theo thứ tự `a-z` là `role` và `user`
+    * Kết nối lại bằng dấu `_`, ta được tên bảng là `role_user`
+    * Đây là quy ước đặt tên của `Laravel`, khi đặt tên như vậy, `Laravel` sẽ tự hiểu bảng `role_user` là `pivot table` kết nối giữa bảng `roles` và bảng `users`.
+    
+#### 8.4.3 Tạo phương thức mới trong Model `User`
+```phpt
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+```
+Phương thức cho này cho phép ta lấy thông tin về tất cả `role` thuộc về `user`
+
+#### 8.4.4 Khai báo route và kiểm tra kết quả
+```phpt
+Route::get('/user/{id}/role', function ($id) {
+
+    $user = \App\User::find($id);
+    $roles = $user->roles()->get();
+
+    dd($roles);
+
+});
+```
+Tìm kiếm `$user` tương ứng theo `$id` truyền vào, sau đó ta gọi phương thức `roles()`, tiếp tục chaining với phương thức `get()` để lấy về danh sách các `role` thuộc về `$user`. 
