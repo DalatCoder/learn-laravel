@@ -49,5 +49,20 @@ Route::get('/user/{id}/role', function ($id) {
 
 });
 
+Route::get('/role/{id}/user', function ($id) {
+
+    $role = \App\Role::find($id);
+    $users = $role->users()->get();
+
+    dd($users);
+
+});
+
+Route::get('/user/{id}/role/pivot', function ($id) {
+
+    $user = \App\User::find($id);
+    dd($user->pivot);
+
+});
 
 

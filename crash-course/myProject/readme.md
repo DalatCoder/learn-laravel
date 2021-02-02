@@ -906,3 +906,12 @@ Route::get('/user/{id}/role', function ($id) {
 });
 ```
 Tìm kiếm `$user` tương ứng theo `$id` truyền vào, sau đó ta gọi phương thức `roles()`, tiếp tục chaining với phương thức `get()` để lấy về danh sách các `role` thuộc về `$user`. 
+
+### 8.5 Truy cập vào `pivot table`
+```phpt
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role')->withPivot(['created_at']);
+    }
+```
+Chỉnh sửa model, chaining phương thức `withPivot` và xác định danh sách các cột cần lấy dữ liệu. 
