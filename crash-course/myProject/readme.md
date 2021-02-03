@@ -915,3 +915,25 @@ Tìm kiếm `$user` tương ứng theo `$id` truyền vào, sau đó ta gọi ph
     }
 ```
 Chỉnh sửa model, chaining phương thức `withPivot` và xác định danh sách các cột cần lấy dữ liệu. 
+
+### 8.6 Has Many Through Relationship
+> Cung cấp các phương thức để làm việc với các bảng có mối quan hệ xa
+
+Giả sử, mỗi `user` thuộc về 1 `country`, mỗi `user` cũng có cái bài `post`. Lúc này thông qua 1 `country`, ta muốn lấy được danh sách tất cả các `post`.
+
+#### 8.6.1 Tạo các migration cần thiết
+* Tạo Model `country`, đồng thời tạo migration
+```phpt
+php artisan make:model Country -m
+```
+
+* Thêm cột `country_id` vào bảng `users`
+```phpt
+php artisan make:migration add_country_id_column_to_users_table --table="users"
+```
+
+* Chạy migration
+```phpt
+php artisan migrate
+```
+

@@ -65,4 +65,10 @@ Route::get('/user/{id}/role/pivot', function ($id) {
 
 });
 
+Route::get('/user/country/{id}', function ($country_id) {
+
+    $country = \App\Country::find($country_id);
+    dd($country->posts()->get());
+
+});
 
