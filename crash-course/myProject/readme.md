@@ -937,3 +937,43 @@ php artisan make:migration add_country_id_column_to_users_table --table="users"
 php artisan migrate
 ```
 
+### 8.7 Polymorphic relation
+#### 8.7.1 Tạo model `Photo` và migration
+```phpt
+php artisan make:model Photo -m
+```
+
+#### 8.7.2 Code migration 
+```phpt
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePhotosTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('photos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('path');
+            $table->integer('imageable_id');
+            $table->string('imageable_type');
+            $table->timestamps();
+        });
+    }
+
+   public function down()
+    {
+        Schema::drop('photos');
+    }
+}
+```
+
+#### 8.7.3 Tạo migration
+```phpt
+php artisan migrate
+```
+
+
+
