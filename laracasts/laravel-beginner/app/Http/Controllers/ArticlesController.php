@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
@@ -65,7 +64,7 @@ class ArticlesController extends Controller
         // Delete the resource.
     }
 
-    public function validateArticle()
+    public function validateArticle(): array
     {
         return \request()->validate([
             'title' => 'required',
