@@ -39,7 +39,7 @@ class ArticlesController extends Controller
         // Save the new article
         Article::create($validatedAttributes);
 
-        return redirect('/articles');
+        return redirect(route('articles.index'));
     }
 
     public function edit(Article $article)
@@ -57,7 +57,7 @@ class ArticlesController extends Controller
         $validatedAttributes = $this->validateArticle();
         $article->update($validatedAttributes);
 
-        return redirect('/articles/' . $article->id);
+        return redirect($article->path());
     }
 
     public function destroy()
