@@ -30,21 +30,12 @@
             </div>
             <div id="sidebar">
                 <ul class="style1">
-                    <li class="first">
-                        <h3>Amet sed volutpat mauris</h3>
-                        <p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra
-                                vulputate enim. Aliquam erat volutpat.</a></p>
-                    </li>
-                    <li>
-                        <h3>Sagittis diam dolor sit amet</h3>
-                        <p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra
-                                vulputate enim. Aliquam erat volutpat.</a></p>
-                    </li>
-                    <li>
-                        <h3>Maecenas ac quam risus</h3>
-                        <p><a href="#">In posuere eleifend odio. Quisque semper augue mattis wisi. Pellentesque viverra
-                                vulputate enim. Aliquam erat volutpat.</a></p>
-                    </li>
+                    @foreach($articles as $article)
+                        <li class="first">
+                            <h3>{{ $article->title }}</h3>
+                            <p><a href="#">{{ $article->excerpt }}</a></p>
+                        </li>
+                    @endforeach
                 </ul>
                 <div id="stwo-col">
                     <div class="sbox1">

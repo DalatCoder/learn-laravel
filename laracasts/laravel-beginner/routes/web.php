@@ -18,5 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/about', function () {
-    return view('about');
+    $articles = \App\Article::latest()->take(3)->get();
+
+    return view('about', [
+        'articles' => $articles
+    ]);
 });
