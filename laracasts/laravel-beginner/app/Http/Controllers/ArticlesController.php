@@ -15,11 +15,10 @@ class ArticlesController extends Controller
         return view('articles.index', ['articles' => $articles]);
     }
 
-    public function show($id)
+    public function show(Article $article)
     {
         // Show a single resource.
 
-        $article = Article::findOrFail($id);
         return view('articles.show', ['article' => $article]);
     }
 
@@ -35,51 +34,28 @@ class ArticlesController extends Controller
         // Persist the new resource.
 
         // Validation
-        \request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
+        $validatedAttributes = $this->validateArticle();
 
         // Save the new article
-        $article = new Article();
-
-        $article->title = \request('title');
-        $article->excerpt = \request('excerpt');
-        $article->body = \request('body');
-
-        $article->save();
+        Article::create($validatedAttributes);
 
         return redirect('/articles');
     }
 
-    public function edit($id)
+    public function edit(Article $article)
     {
         // Show a view to edit an existing resource.
-
-        $article = Article::findOrFail($id);
 
         return view('articles.edit', ['article' => $article]);
     }
 
-    public function update($id)
+    public function update(Article $article)
     {
         // Persist the edited resource.
 
         // Validation
-        \request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
-
-        $article = Article::findOrFail($id);
-
-        $article->title = \request('title');
-        $article->excerpt = \request('excerpt');
-        $article->body = \request('body');
-
-        $article->save();
+        $validatedAttributes = $this->validateArticle();
+        $article->update($validatedAttributes);
 
         return redirect('/articles/' . $article->id);
     }
@@ -89,4 +65,12 @@ class ArticlesController extends Controller
         // Delete the resource.
     }
 
+    public function validateArticle()
+    {
+        return \request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+        ]);
+    }
 }
