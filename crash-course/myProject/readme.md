@@ -975,5 +975,12 @@ class CreatePhotosTable extends Migration
 php artisan migrate
 ```
 
+## 9. Tinker
+> Tool giúp test database nhanh hơn
+>
+> `php artisan tinker`
+
+
+### 9.1 Create data
 
 
