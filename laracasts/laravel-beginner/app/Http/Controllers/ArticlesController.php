@@ -16,7 +16,7 @@ class ArticlesController extends Controller
         } else {
             $articles = Article::latest()->paginate(5);
         }
-        
+
         return view('articles.index', ['articles' => $articles]);
     }
 
@@ -31,7 +31,9 @@ class ArticlesController extends Controller
     {
         // Show a view to create a new resource.
 
-        return view('articles.create');
+        return view('articles.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store()
@@ -42,7 +44,13 @@ class ArticlesController extends Controller
         $validatedAttributes = $this->validateArticle();
 
         // Save the new article
-        Article::create($validatedAttributes);
+        $article = new Article(request(['title', 'excerpt', 'body']));
+        $article->user_id = 1;
+        $article->save();
+
+        if (request()->has('tag')) {
+            $article->tags()->attach(request('tags'));
+        }
 
         return redirect(route('articles.index'));
     }
@@ -75,7 +83,8 @@ class ArticlesController extends Controller
         return \request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'tags' => 'exists:tags,id'
         ]);
     }
 }
