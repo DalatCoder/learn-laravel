@@ -8,7 +8,6 @@
     <div class="content-wrapper">
         @include('partials.content-header', ['name' => 'Trang Chủ', 'key' => ''])
 
-        <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
@@ -16,9 +15,7 @@
                         <h1>Trang chu</h1>
                     </div>
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            </div>
         </div>
-        <!-- /.content -->
     </div>
 @endsection

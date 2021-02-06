@@ -6,9 +6,8 @@
 
 @section('content')
     <div class="content-wrapper">
-    @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Danh Mục'])
+        @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Danh Mục'])
 
-    <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
@@ -38,9 +37,8 @@
                         </form>
                     </div>
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+
+            </div>
         </div>
-        <!-- /.content -->
     </div>
 @endsection
