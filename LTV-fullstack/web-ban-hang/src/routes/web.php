@@ -72,6 +72,11 @@ Route::prefix('menus')->group(function () {
         'uses' => 'MenuController@edit'
     ]);
 
+    Route::put('/update/{id}', [
+        'as' => 'menus.update',
+        'uses' => 'MenuController@update'
+    ]);
+
     Route::get('/delete/{id}', [
         'as' => 'menus.delete',
         'uses' => 'MenuController@delete'

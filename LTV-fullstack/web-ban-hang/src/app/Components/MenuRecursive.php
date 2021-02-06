@@ -27,4 +27,22 @@ class MenuRecursive
         return $this->html;
     }
 
+    public function menuRecursiveEdit($selectedParent, $parent_id = 0, $subMark = ''): string
+    {
+        $data = Menu::where('parent_id', $parent_id)->get();
+
+        foreach ($data as $dataItem) {
+            if ($selectedParent == $dataItem->id) {
+                $this->html .= '<option selected value="' . $dataItem->id . '">' . $subMark . $dataItem->name . '</option>';
+            }
+            else {
+                $this->html .= '<option value="' . $dataItem->id . '">' . $subMark . $dataItem->name . '</option>';
+            }
+
+            $this->menuRecursiveEdit($selectedParent, $dataItem->id, $subMark . '--');
+        }
+
+        return $this->html;
+    }
+
 }
