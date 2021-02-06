@@ -34,5 +34,15 @@ Route::prefix('categories')->group(function () {
         'as' => 'categories.create',
         'uses' => 'CategoryController@create'
     ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'categories.edit',
+        'uses' => 'CategoryController@edit'
+    ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'categories.delete',
+        'uses' => 'CategoryController@delete'
+    ]);
 });
 

@@ -18,7 +18,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('category.index');
+        return view('category.index', ['categories' => $this->category->latest()->paginate(5)]);
     }
 
     public function create()
@@ -38,5 +38,15 @@ class CategoryController extends Controller
         ]);
 
         return redirect(route('categories.index'));
+    }
+
+    public function edit($id)
+    {
+        dd('edit');
+    }
+
+    public function delete($id)
+    {
+        dd('delete');
     }
 }
