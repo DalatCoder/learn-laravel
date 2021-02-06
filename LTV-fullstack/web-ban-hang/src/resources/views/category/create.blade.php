@@ -23,6 +23,7 @@
                                 <label for="">Chọn danh mục cha</label>
                                 <select name="" id="" class="form-control">
                                     <option value="0">Chọn danh mục cha</option>
+                                    {!! $htmlSelect !!}
                                 </select>
                             </div>
 
