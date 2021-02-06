@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Components\Recursive;
+use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -23,10 +24,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = $this->category->all();
-        $recursive = new Recursive($categories);
-
-        return view('category.create', ['htmlSelect' => $recursive->categoryRecursive()]);
+        return view('category.create', ['htmlSelect' => $this->getCategoryHtmlSelection()]);
     }
 
     public function store(Request $request)
@@ -40,9 +38,32 @@ class CategoryController extends Controller
         return redirect(route('categories.index'));
     }
 
+    function getCategoryHtmlSelection($parent_id = 0): string
+    {
+        $categories = $this->category->all();
+        $recursive = new Recursive($categories);
+        return $recursive->categoryRecursive($parent_id);
+    }
+
     public function edit($id)
     {
-        dd('edit');
+        $category = $this->category->findOrFail($id);
+        $htmlSelect = $this->getCategoryHtmlSelection($category->parent_id);
+
+        return view('category.edit', ['category' => $category, 'htmlSelect' => $htmlSelect]);
+    }
+
+    public function update($id, Request $request)
+    {
+        $category = $this->category->findOrFail($id);
+
+        $category->update([
+            'name' => $request['name'],
+            'parent_id' => $request['parent_id'],
+            'slug' => Str::slug(Str::lower($request['name']))
+        ]);
+
+        return redirect(route('categories.index'));
     }
 
     public function delete($id)
