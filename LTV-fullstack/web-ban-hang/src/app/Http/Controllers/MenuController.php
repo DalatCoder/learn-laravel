@@ -20,13 +20,13 @@ class MenuController extends Controller
 
     public function index()
     {
-        return view('menus.index', ['menus' => $this->menu->latest()->paginate(5)]);
+        return view('admin.menus.index', ['menus' => $this->menu->latest()->paginate(5)]);
     }
 
     public function create()
     {
         $optionSelect = $this->menuRecursive->menuRecursiveAdd();
-        return view('menus.create', ['optionSelect' => $optionSelect]);
+        return view('admin.menus.create', ['optionSelect' => $optionSelect]);
     }
 
     public function store(Request $request)
@@ -45,7 +45,7 @@ class MenuController extends Controller
         $menu = $this->menu->findOrFail($id);
 
         $optionSelect = $this->menuRecursive->menuRecursiveEdit($menu->parent_id);
-        return view('menus.edit', ['menu' => $menu, 'optionSelect' => $optionSelect]);
+        return view('admin.menus.edit', ['menu' => $menu, 'optionSelect' => $optionSelect]);
     }
 
     public function update($id, Request $request)

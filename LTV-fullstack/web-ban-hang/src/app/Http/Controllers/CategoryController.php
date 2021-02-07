@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Components\Recursive;
-use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,12 +18,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('category.index', ['categories' => $this->category->latest()->paginate(5)]);
+        return view('admin.category.index', ['categories' => $this->category->latest()->paginate(5)]);
     }
 
     public function create()
     {
-        return view('category.create', ['htmlSelect' => $this->getCategoryHtmlSelection()]);
+        return view('admin.category.create', ['htmlSelect' => $this->getCategoryHtmlSelection()]);
     }
 
     public function store(Request $request)
@@ -50,7 +49,7 @@ class CategoryController extends Controller
         $category = $this->category->findOrFail($id);
         $htmlSelect = $this->getCategoryHtmlSelection($category->parent_id);
 
-        return view('category.edit', ['category' => $category, 'htmlSelect' => $htmlSelect]);
+        return view('admin.category.edit', ['category' => $category, 'htmlSelect' => $htmlSelect]);
     }
 
     public function update($id, Request $request)
