@@ -10,15 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/admin', 'AdminController@loginAdmin')->name('login.show');
-Route::post('/admin', 'AdminController@postLoginAdmin')->name('login.login');
-
 Route::get('/home', function () {
     return view('home');
 });
 
 Route::prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@loginAdmin')->name('login.show');
+    Route::post('/', 'AdminController@postLoginAdmin')->name('login.login');
+
     Route::prefix('categories')->group(function () {
         Route::get('/', [
             'as' => 'categories.index',
@@ -95,4 +94,3 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 });
-

@@ -7,7 +7,8 @@
 
 
 @section('style')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('vendor/select2/select2.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin_assets/product/create/create.css') }}" rel="stylesheet"/>
 @endsection
 
 
@@ -72,7 +73,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="parent_id">Chọn danh mục *</label>
+                                <label for="">Chọn danh mục *</label>
                                 <select name="parent_id" id="parent_id" class="form-control select2_init">
                                     <option value="">Chọn danh mục</option>
                                     {!! $htmlSelect !!}
@@ -81,14 +82,14 @@
 
                             <div class="form-group">
                                 <label for="">Nhập tags cho sản phẩm</label>
-                                <select class="form-control tags_select_choose" multiple="multiple">
+                                <select name="tags[]" class="form-control tags_select_choose" multiple="multiple">
                                 </select>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="content">Mô tả sản phẩm</label>
-                                <textarea name="content" id="content" rows="5" class="form-control"></textarea>
+                                <textarea name="content" id="content" rows="10" class="form-control my-editor"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Thêm</button>
@@ -103,18 +104,7 @@
 
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <script>
-        $(".tags_select_choose").select2({
-            tags: true,
-            tokenSeparators: [',']
-        });
-
-        $(".select2_init").select2({
-            placeholder: 'Chọn danh mục',
-            allowClear: true
-        });
-
-    </script>
+    <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
+    <script src="{{ asset('admin_assets/product/create/create.js') }}"></script>
 @endsection
