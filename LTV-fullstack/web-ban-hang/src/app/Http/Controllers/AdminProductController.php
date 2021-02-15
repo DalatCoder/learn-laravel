@@ -34,7 +34,10 @@ class AdminProductController extends Controller
 
     public function index()
     {
-        return view('admin.product.index');
+        $products = $this->product->latest()->paginate(5);
+        return view('admin.product.index', [
+            'products' => $products
+        ]);
     }
 
     public function create()
@@ -89,7 +92,7 @@ class AdminProductController extends Controller
             }
 
             DB::commit();
-            
+
             return redirect()->route('products.index');
         } catch (\Exception $e) {
             DB::rollBack();

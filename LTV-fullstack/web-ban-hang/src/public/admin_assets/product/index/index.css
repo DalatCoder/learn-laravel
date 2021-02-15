@@ -1,0 +1,6 @@
+.product-feature-image {
+    display: block;
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+}
