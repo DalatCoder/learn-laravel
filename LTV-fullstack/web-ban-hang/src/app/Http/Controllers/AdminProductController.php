@@ -172,6 +172,26 @@ class AdminProductController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        try {
+            $this->product->findOrFail($id)->delete();
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
+    }
+
     function getCategoryHtmlSelection($parent_id = 0): string
     {
         $categories = $this->category->all();

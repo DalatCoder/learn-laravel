@@ -9,7 +9,8 @@
 @endsection
 
 @section('js')
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{{ asset('admin_assets/product/index/index.js') }}"></script>
 @endsection
 
 @section('content')
@@ -48,10 +49,11 @@
                                     </td>
                                     <td>{{ optional($product->category)->name }}</td>
                                     <td>
-                                        <a href="{{ route('products.edit', [$product->id]) }}"
+                                        <a href="{{ route('products.edit', ['id' => $product->id]) }}"
                                            class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('categories.delete', [$product->id]) }}"
-                                           class="btn btn-danger">Xóa</a>
+                                        <a href="{{ route('products.delete', ['id' => $product->id]) }}"
+                                           data-url="{{ route('products.delete', ['id' => $product->id]) }}"
+                                           class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach
