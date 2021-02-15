@@ -15,4 +15,9 @@ class Product extends Model
         'feature_image_name',
         'feature_image_path'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
 }

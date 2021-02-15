@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Components\Recursive;
 use App\Product;
+use App\ProductImage;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,13 @@ class AdminProductController extends Controller
 
     private $category;
     private $product;
+    private $productImage;
 
-    public function __construct(Category $category, Product $product)
+    public function __construct(Category $category, Product $product, ProductImage $productImage)
     {
         $this->category = $category;
         $this->product = $product;
+        $this->productImage = $productImage;
     }
 
     public function index()
@@ -52,7 +55,17 @@ class AdminProductController extends Controller
         }
 
         $product = $this->product->create($dataProductCreate);
-        dd($product);
+
+        // Save list of detail images
+        if ($request->has('image_path')) {
+            foreach ($request['image_path'] as $item) {
+                $dataProductImageDetail = $this->storageTraitUploadMultiple($item, 'products');
+                $product->images()->create([
+                    'image_path' => $dataProductImageDetail['file_path'],
+                    'image_name' => $dataProductImageDetail['file_name']
+                ]);
+            }
+        }
     }
 
     function getCategoryHtmlSelection($parent_id = 0): string
