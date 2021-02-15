@@ -20,7 +20,8 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('products.update', ['id' => $product->id]) }}" method="POST"
+                              enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -62,7 +63,8 @@
                                 </div>
                                 <div class="col-md-4 container-feature-image">
                                     <div class="row">
-                                        <img class="product-feature-image" src="{{ asset($product->feature_image_path) }}"
+                                        <img class="product-feature-image"
+                                             src="{{ asset($product->feature_image_path) }}"
                                              alt="Feature Image">
                                     </div>
                                 </div>
@@ -84,7 +86,8 @@
                                     <div class="row">
                                         @foreach($product->images as $productImage)
                                             <div class="col-md-3">
-                                                <img class="product-detail-image" src="{{ asset($productImage->image_path) }}"
+                                                <img class="product-detail-image"
+                                                     src="{{ asset($productImage->image_path) }}"
                                                      alt="Product detail image">
                                             </div>
                                         @endforeach
@@ -104,7 +107,7 @@
                                 <label for="">Nhập tags cho sản phẩm</label>
                                 <select name="tags[]" class="form-control tags_select_choose" multiple="multiple">
                                     @foreach($product->tags as $tag)
-                                        <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                                        <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

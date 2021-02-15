@@ -102,7 +102,7 @@ class AdminProductController extends Controller
         }
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $product = $this->product->findOrFail($id);
         $htmlSelect = $this->getCategoryHtmlSelection($product->category_id);
@@ -111,6 +111,65 @@ class AdminProductController extends Controller
             'htmlSelect' => $htmlSelect,
             'product' => $product
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $dataProductUpdate = [
+                'name' => $request['name'],
+                'price' => $request['price'],
+                'content' => $request['description'],
+                'user_id' => auth()->id(),
+                'category_id' => $request['category_id']
+            ];
+
+            $featureImage = $this->storageTraitUpload($request, 'feature_image_path', 'products');
+            if (!empty($featureImage)) {
+                $dataProductUpdate['feature_image_name'] = $featureImage['file_name'];
+                $dataProductUpdate['feature_image_path'] = $featureImage['file_path'];
+            }
+
+            $product = $this->product->findOrFail($id);
+            $product->update($dataProductUpdate);// Save list of detail images
+
+            if ($request->has('image_path')) {
+                $this->productImage->where('product_id', $id)->delete();
+
+                foreach ($request['image_path'] as $item) {
+                    $dataProductImageDetail = $this->storageTraitUploadMultiple($item, 'products');
+                    $product->images()->create([
+                        'image_path' => $dataProductImageDetail['file_path'],
+                        'image_name' => $dataProductImageDetail['file_name']
+                    ]);
+                }
+            }// Save list of tags
+            if ($request->has('tags')) {
+                $tagIds = [];
+                foreach ($request['tags'] as $item) {
+                    // Save to tags table
+                    $tag = $this->tag->firstOrCreate([
+                        'name' => $item
+                    ]);
+
+                    array_push($tagIds, $tag->id);
+                }
+
+                // Save to product_tags table
+                $product->tags()->sync($tagIds);
+            }
+
+            DB::commit();
+
+            return redirect()->route('products.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+        }
     }
 
     function getCategoryHtmlSelection($parent_id = 0): string
