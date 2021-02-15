@@ -73,8 +73,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="">Chọn danh mục *</label>
-                                <select name="parent_id" id="parent_id" class="form-control select2_init">
+                                <label for="category_id">Chọn danh mục *</label>
+                                <select name="category_id" id="category_id" class="form-control select2_init">
                                     <option value="">Chọn danh mục</option>
                                     {!! $htmlSelect !!}
                                 </select>
@@ -86,10 +86,9 @@
                                 </select>
                             </div>
 
-
                             <div class="form-group">
-                                <label for="content">Mô tả sản phẩm</label>
-                                <textarea name="content" id="content" rows="10" class="form-control my-editor"></textarea>
+                                <label for="description">Mô tả sản phẩm</label>
+                                <textarea name="description" id="description" rows="10" class="form-control my-editor"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Thêm</button>
