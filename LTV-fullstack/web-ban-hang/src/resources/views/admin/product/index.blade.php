@@ -40,15 +40,15 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td>{{ number_format($product->price) }}</td>
                                     <td>
                                         <img class="product-feature-image"
                                              src="{{ asset($product->feature_image_path) }}"
                                              alt="Feature image">
                                     </td>
-                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ optional($product->category)->name }}</td>
                                     <td>
-                                        <a href="{{ route('categories.edit', [$product->id]) }}"
+                                        <a href="{{ route('products.edit', [$product->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('categories.delete', [$product->id]) }}"
                                            class="btn btn-danger">Xóa</a>

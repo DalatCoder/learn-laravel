@@ -102,6 +102,17 @@ class AdminProductController extends Controller
         }
     }
 
+    public function edit($id, Request $request)
+    {
+        $product = $this->product->findOrFail($id);
+        $htmlSelect = $this->getCategoryHtmlSelection($product->category_id);
+
+        return view('admin.product.edit', [
+            'htmlSelect' => $htmlSelect,
+            'product' => $product
+        ]);
+    }
+
     function getCategoryHtmlSelection($parent_id = 0): string
     {
         $categories = $this->category->all();
