@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('content');
             $table->bigInteger('user_id');
             $table->bigInteger('category_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
