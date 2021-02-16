@@ -113,4 +113,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'AdminProductController@delete'
         ]);
     });
+
+    Route::prefix('sliders')->group(function () {
+       Route::get('/', [
+           'as' => 'sliders.index',
+           'uses' => 'AdminSliderController@index'
+       ]);
+    });
 });
