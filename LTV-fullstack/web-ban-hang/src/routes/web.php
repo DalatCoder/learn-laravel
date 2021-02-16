@@ -124,5 +124,10 @@ Route::prefix('admin')->group(function () {
            'as' => 'sliders.create',
            'uses' => 'AdminSliderController@create'
        ]);
+
+       Route::post('/store', [
+           'as' => 'sliders.store',
+           'uses' => 'AdminSliderController@store'
+       ]);
     });
 });
