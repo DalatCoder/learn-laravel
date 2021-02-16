@@ -16,20 +16,6 @@
     <div class="content-wrapper">
         @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Sản Phẩm'])
 
-        @if($errors->any())
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        @endif
-
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
@@ -42,9 +28,12 @@
                                     name="name"
                                     id="name"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('name') is-invalid @enderror"
                                     placeholder="Nhập tên sản phẩm"
                                 >
+                                @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -53,9 +42,12 @@
                                     name="price"
                                     id="price"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('price') is-invalid @enderror"
                                     placeholder="Nhập giá sản phẩm"
                                 >
+                                @error('price')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 
@@ -88,10 +80,14 @@
 
                             <div class="form-group">
                                 <label for="category_id">Chọn danh mục *</label>
-                                <select name="category_id" id="category_id" class="form-control select2_init">
+                                <select name="category_id" id="category_id"
+                                        class="form-control select2_init @error('category_id') is-invalid @enderror">
                                     <option value="">Chọn danh mục</option>
                                     {!! $htmlSelect !!}
                                 </select>
+                                @error('category_id')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
@@ -103,7 +99,10 @@
                             <div class="form-group">
                                 <label for="description">Mô tả sản phẩm</label>
                                 <textarea name="description" id="description" rows="10"
-                                          class="form-control my-editor"></textarea>
+                                          class="form-control my-editor @error('description') is-invalid @enderror"></textarea>
+                                @error('description')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <button type="submit" class="btn btn-primary">Thêm</button>

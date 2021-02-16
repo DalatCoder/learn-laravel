@@ -27,7 +27,7 @@ class ProductAddRequest extends FormRequest
             'name' => 'bail|required|unique:products|max:255|min:5',
             'price' => 'bail|required|integer',
             'category_id' => 'bail|required|integer|exists:categories,id',
-            'content' => 'required'
+            'description' => 'required'
         ];
     }
 
@@ -39,16 +39,16 @@ class ProductAddRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên cho sản phẩm',
+            'name.required' => 'Tên sản phẩm không được để trống',
             'name.unique' => 'Sản phẩm cùng tên đã tồn tại, vui lòng chọn tên khác',
-            'name.max' => 'Tên sản phẩm quá dài',
-            'name.min' => 'Tên sản phẩm quá ngắn',
-            'price.required' => 'Vui lòng nhập giá cho sản phẩm',
-            'price.integer' => 'Vui lòng nhập giá sản phẩm hợp lệ',
-            'category_id.required' => 'Vui lòng cho biết sản phẩm thuộc nhóm nào',
+            'name.max' => 'Tên sản phẩm không được dài hơn 255 kí tự',
+            'name.min' => 'Tên sản phẩm không được ít hơn 5 kí tự',
+            'price.required' => 'Giá sản phẩm không được để trống',
+            'price.integer' => 'Giá sản phẩm không hợp lệ',
+            'category_id.required' => 'Danh mục sản phẩm không được để trống',
             'category_id.integer' => 'Nhóm sản phẩm không hợp lệ',
-            'category_id.exists:categories,id' => 'Nhóm sản phẩm không hợp lệ',
-            'content.required' => 'Vui lòng nhập mô tả cho sản phẩm'
+            'category_id.exists' => 'Nhóm sản phẩm không tồn tại',
+            'description.required' => 'Mô tả sản phẩm không được để trống'
         ];
     }
 }
