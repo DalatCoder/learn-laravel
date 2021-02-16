@@ -175,9 +175,9 @@ class AdminProductController extends Controller
 
     public function delete($id)
     {
-        try {
-            $this->product->findOrFail($id)->delete();
+        $this->product->findOrFail($id)->delete();
 
+        try {
             return response()->json([
                 'code' => 200,
                 'message' => 'success'
