@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Components\Recursive;
+use App\Http\Requests\ProductAddRequest;
 use App\Product;
 use App\ProductImage;
 use App\ProductTag;
@@ -49,7 +50,7 @@ class AdminProductController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductAddRequest $request)
     {
         try {
             DB::beginTransaction();

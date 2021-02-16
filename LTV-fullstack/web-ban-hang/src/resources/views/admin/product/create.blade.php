@@ -16,6 +16,20 @@
     <div class="content-wrapper">
         @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Sản Phẩm'])
 
+        @if($errors->any())
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
@@ -88,7 +102,8 @@
 
                             <div class="form-group">
                                 <label for="description">Mô tả sản phẩm</label>
-                                <textarea name="description" id="description" rows="10" class="form-control my-editor"></textarea>
+                                <textarea name="description" id="description" rows="10"
+                                          class="form-control my-editor"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Thêm</button>
