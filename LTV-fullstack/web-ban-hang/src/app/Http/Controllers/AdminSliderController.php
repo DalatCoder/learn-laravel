@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SliderAddRequest;
+use App\Http\Requests\SliderUpdateRequest;
 use App\Slider;
 use App\Traits\StorageImageTrait;
 use Illuminate\Support\Facades\Log;
@@ -59,5 +60,29 @@ class AdminSliderController extends Controller
         return view('admin.slider.edit', [
             'slider' => $slider
         ]);
+    }
+
+    public function update(SliderUpdateRequest $request, $id)
+    {
+        $slider = $this->slider->findOrFail($id);
+
+        try {
+            $dataUpdate = [
+                'name' => $request['name'],
+                'description' => $request['description']
+            ];
+            if ($request->has('image')) {
+                $dataImage = $this->storageTraitUpload($request, 'image', 'sliders');
+                if (!empty($dataImage)) {
+                    $dataUpdate['image_path'] = $dataImage['file_path'];
+                    $dataUpdate['image_name'] = $dataImage['file_name'];
+                }
+            }
+            $slider->update($dataUpdate);
+            return redirect()->route('sliders.index');
+        } catch (\Exception $exception) {
+            $message = 'Message: ' . $exception->getMessage() . '. Line: ' . $exception->getLine();
+            Log::error($message);
+        }
     }
 }
