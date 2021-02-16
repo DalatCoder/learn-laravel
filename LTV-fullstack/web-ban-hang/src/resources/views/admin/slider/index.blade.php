@@ -4,6 +4,10 @@
     <title>Trang danh sách Slider</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('admin_assets/slider/index/index.css') }}">
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         @include('partials.content-header', ['name' => 'Sliders', 'key' => 'Tất Cả'])
@@ -25,8 +29,30 @@
                                 <th scope="col">Hành động</th>
                             </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                            @foreach($sliders as $index=>$slider)
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>{{ $slider->name }}</td>
+                                    <td>{{ $slider->description }}</td>
+                                    <td>
+                                        <img class="slider-image" src="{{ asset($slider->image_path) }}"
+                                             alt="Slider image">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('menus.edit', [$slider->id]) }}"
+                                           class="btn btn-warning">Sửa</a>
+                                        <a href="{{ route('menus.delete', [$slider->id]) }}"
+                                           class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
                         </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        {{ $sliders->links() }}
                     </div>
                 </div>
             </div>
