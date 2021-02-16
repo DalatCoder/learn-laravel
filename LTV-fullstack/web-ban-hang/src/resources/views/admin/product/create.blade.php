@@ -30,6 +30,7 @@
                                     type="text"
                                     class="form-control @error('name') is-invalid @enderror"
                                     placeholder="Nhập tên sản phẩm"
+                                    value="{{ old('name') }}"
                                 >
                                 @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -44,6 +45,7 @@
                                     type="text"
                                     class="form-control @error('price') is-invalid @enderror"
                                     placeholder="Nhập giá sản phẩm"
+                                    value="{{ old('price') }}"
                                 >
                                 @error('price')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -58,7 +60,8 @@
                                         type="file"
                                         class="custom-file-input"
                                         id="feature_image_path"
-                                        name="feature_image_path">
+                                        name="feature_image_path"
+                                    >
                                     <label class="custom-file-label" for="feature_image_path">Chọn ảnh đại diện cho sản
                                         phẩm...</label>
                                 </div>
@@ -72,7 +75,8 @@
                                         class="custom-file-input"
                                         id="image_path"
                                         name="image_path[]"
-                                        multiple>
+                                        multiple
+                                    >
                                     <label class="custom-file-label" for="image_path">Chọn danh sách ảnh chi tiết cho
                                         sản phẩm...</label>
                                 </div>
@@ -93,13 +97,18 @@
                             <div class="form-group">
                                 <label for="">Nhập tags cho sản phẩm</label>
                                 <select name="tags[]" class="form-control tags_select_choose" multiple="multiple">
+                                    @if(!empty(old('tags')))
+                                        @foreach(old('tags') as $tag)
+                                            <option value="" selected>{{ $tag }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="description">Mô tả sản phẩm</label>
                                 <textarea name="description" id="description" rows="10"
-                                          class="form-control my-editor @error('description') is-invalid @enderror"></textarea>
+                                          class="form-control my-editor @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
                                 @error('description')
                                 <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -120,4 +129,13 @@
     <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js"></script>
     <script src="{{ asset('admin_assets/product/create/create.js') }}"></script>
+
+    <script>
+        $(function () {
+            @if(!empty(old('category_id')))
+                $('#category_id').val({{ old('category_id') }});
+                $('#category_id').trigger('change');
+            @endif
+        })
+    </script>
 @endsection
