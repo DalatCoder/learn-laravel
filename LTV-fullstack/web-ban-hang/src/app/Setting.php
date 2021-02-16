@@ -11,6 +11,7 @@ class Setting extends Model
 
     protected $fillable = [
         'config_key',
-        'config_value'
+        'config_value',
+        'type'
     ];
 }

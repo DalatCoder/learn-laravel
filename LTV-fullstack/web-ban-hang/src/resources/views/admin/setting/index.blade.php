@@ -45,7 +45,7 @@
                                     <td>{{ $setting->config_key }}</td>
                                     <td>{{ $setting->config_value }}</td>
                                     <td>
-                                        <a href="{{ route('menus.edit', [$setting->id]) }}"
+                                        <a href="{{ route('settings.edit', [$setting->id]) . '?type=' . $setting->type}}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('menus.delete', [$setting->id]) }}"
                                            class="btn btn-danger">Xóa</a>

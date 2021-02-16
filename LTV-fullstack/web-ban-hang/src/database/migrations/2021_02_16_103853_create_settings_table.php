@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->bigIncrements('id');
             $table->string('config_key');
             $table->text('config_value');
+            $table->string('type');
             $table->softDeletes();
             $table->timestamps();
         });
