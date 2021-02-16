@@ -139,5 +139,10 @@ Route::prefix('admin')->group(function () {
            'as' => 'sliders.update',
            'uses' => 'AdminSliderController@update'
        ]);
+
+       Route::get('/delete/{id}', [
+           'as' => 'sliders.delete',
+           'uses' => 'AdminSliderController@delete'
+       ]);
     });
 });

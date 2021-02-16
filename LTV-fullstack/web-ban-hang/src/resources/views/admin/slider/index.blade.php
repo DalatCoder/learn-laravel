@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/slider/index/index.css') }}">
 @endsection
 
+@section('js')
+    <script src="{{ asset('vendor/sweetAlert2/sweetalert2@10.js') }}"></script>
+    <script src="{{ asset('admin_assets/slider/index/index.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         @include('partials.content-header', ['name' => 'Sliders', 'key' => 'Tất Cả'])
@@ -42,8 +47,9 @@
                                     <td>
                                         <a href="{{ route('sliders.edit', [$slider->id]) }}"
                                            class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('menus.delete', [$slider->id]) }}"
-                                           class="btn btn-danger">Xóa</a>
+                                        <a href="{{ route('sliders.delete', [$slider->id]) }}"
+                                           data-url="{{ route('sliders.delete', [$slider->id]) }}"
+                                           class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach
