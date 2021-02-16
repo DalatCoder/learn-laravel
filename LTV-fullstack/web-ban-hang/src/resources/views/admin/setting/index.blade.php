@@ -39,25 +39,26 @@
                             </thead>
                             <tbody>
 
-                            {{--                            @foreach($menus as $index=>$menu)--}}
-                            {{--                                <tr>--}}
-                            {{--                                    <th scope="row">{{ $index + 1 }}</th>--}}
-                            {{--                                    <td>{{ $menu->name }}</td>--}}
-                            {{--                                    <td>--}}
-                            {{--                                        <a href="{{ route('menus.edit', [$menu->id]) }}"--}}
-                            {{--                                           class="btn btn-warning">Sửa</a>--}}
-                            {{--                                        <a href="{{ route('menus.delete', [$menu->id]) }}"--}}
-                            {{--                                           class="btn btn-danger">Xóa</a>--}}
-                            {{--                                    </td>--}}
-                            {{--                                </tr>--}}
-                            {{--                            @endforeach--}}
+                            @foreach($settings as $index=>$setting)
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>{{ $setting->config_key }}</td>
+                                    <td>{{ $setting->config_value }}</td>
+                                    <td>
+                                        <a href="{{ route('menus.edit', [$setting->id]) }}"
+                                           class="btn btn-warning">Sửa</a>
+                                        <a href="{{ route('menus.delete', [$setting->id]) }}"
+                                           class="btn btn-danger">Xóa</a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
                         </table>
                     </div>
 
                     <div class="col-md-12">
-                        {{--                        {{ $menus->links() }}--}}
+                        {{ $settings->links() }}
                     </div>
                 </div>
             </div>
