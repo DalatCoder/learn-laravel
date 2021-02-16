@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/setting/index/index.css') }}">
 @endsection
 
+@section('js')
+    <script src="{{ asset('vendor/sweetAlert2/sweetalert2@10.js') }}"></script>
+    <script src="{{ asset('admin_assets/setting/index/index.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         @include('partials.content-header', ['name' => 'Cấu hình', 'key' => 'Tất Cả'])
@@ -45,10 +50,11 @@
                                     <td>{{ $setting->config_key }}</td>
                                     <td>{{ $setting->config_value }}</td>
                                     <td>
-                                        <a href="{{ route('settings.edit', [$setting->id]) . '?type=' . $setting->type}}"
+                                        <a href="{{ route('settings.edit', ['id' => $setting->id]) . '?type=' . $setting->type}}"
                                            class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('menus.delete', [$setting->id]) }}"
-                                           class="btn btn-danger">Xóa</a>
+                                        <a href="{{ route('settings.delete', ['id' => $setting->id]) }}"
+                                           data-url="{{ route('settings.delete', ['id' => $setting->id]) }}"
+                                           class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach

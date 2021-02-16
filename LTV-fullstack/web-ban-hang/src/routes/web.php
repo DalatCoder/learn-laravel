@@ -171,5 +171,10 @@ Route::prefix('admin')->group(function () {
            'as' => 'settings.update',
            'uses' => 'AdminSettingController@update'
        ]);
+
+       Route::get('/delete/{id}', [
+           'as' => 'settings.delete',
+           'uses' => 'AdminSettingController@delete'
+       ]);
     });
 });
