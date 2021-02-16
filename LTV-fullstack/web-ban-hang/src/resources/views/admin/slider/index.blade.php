@@ -12,7 +12,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{ route('categories.create') }}" class="btn btn-success float-right my-2">Thêm slider</a>
+                        <a href="{{ route('sliders.create') }}" class="btn btn-success float-right my-2">Thêm slider</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table table-bordered table-hover">
