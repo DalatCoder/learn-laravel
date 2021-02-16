@@ -40,7 +40,7 @@
                                              alt="Slider image">
                                     </td>
                                     <td>
-                                        <a href="{{ route('menus.edit', [$slider->id]) }}"
+                                        <a href="{{ route('sliders.edit', [$slider->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('menus.delete', [$slider->id]) }}"
                                            class="btn btn-danger">Xóa</a>

@@ -52,4 +52,12 @@ class AdminSliderController extends Controller
             Log::error($message);
         }
     }
+
+    public function edit($id)
+    {
+        $slider = $this->slider->findOrFail($id);
+        return view('admin.slider.edit', [
+            'slider' => $slider
+        ]);
+    }
 }
