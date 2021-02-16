@@ -53,6 +53,15 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('settings.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            Cấu hình
+                        </p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>
