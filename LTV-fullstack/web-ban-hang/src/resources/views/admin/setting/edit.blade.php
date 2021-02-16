@@ -16,7 +16,9 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form action="{{ route('settings.store') }}" method="POST">
+                        <form
+                            action="{{ route('settings.update', ['id' => $setting->id]) . '?type=' . $setting->type }}"
+                            method="POST">
                             @csrf
                             @method('PUT')
 

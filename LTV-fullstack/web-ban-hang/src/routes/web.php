@@ -166,5 +166,10 @@ Route::prefix('admin')->group(function () {
            'as' => 'settings.edit',
            'uses' => 'AdminSettingController@edit'
        ]);
+
+       Route::put('/update/{id}', [
+           'as' => 'settings.update',
+           'uses' => 'AdminSettingController@update'
+       ]);
     });
 });

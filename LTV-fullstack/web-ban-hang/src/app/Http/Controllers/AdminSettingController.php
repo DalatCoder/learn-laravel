@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingAddRequest;
+use App\Http\Requests\SettingUpdateRequest;
 use App\Setting;
 
 class AdminSettingController extends Controller
@@ -44,5 +45,18 @@ class AdminSettingController extends Controller
         return view('admin.setting.edit', [
             'setting' => $setting
         ]);
+    }
+
+    public function update(SettingUpdateRequest $request, $id)
+    {
+        $setting = $this->setting->findOrFail($id);
+
+        $setting->update([
+            'config_key' => $request['config_key'],
+            'config_value' => $request['config_value'],
+            'type' => $request->get('type')
+        ]);
+
+        return redirect()->route('settings.index');
     }
 }
