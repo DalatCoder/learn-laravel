@@ -100,4 +100,25 @@ class AdminRoleController extends Controller
             Log::error($message);
         }
     }
+
+    public function delete($id)
+    {
+        $role = $this->role->findOrFail($id);
+
+        try {
+            $role->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
+    }
 }

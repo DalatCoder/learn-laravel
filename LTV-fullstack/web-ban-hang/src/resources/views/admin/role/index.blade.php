@@ -38,9 +38,9 @@
                                     <td>
                                         <a href="{{ route('roles.edit', [$role->id]) }}"
                                            class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('users.delete', [$role->id]) }}"
-                                           data-url="{{ route('users.delete', [$role->id]) }}"
-                                           data-title="Tài khoản người dùng"
+                                        <a href="{{ route('roles.delete', [$role->id]) }}"
+                                           data-url="{{ route('roles.delete', [$role->id]) }}"
+                                           data-title="Nhóm người dùng"
                                            class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
