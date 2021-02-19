@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form action="{{ route('sliders.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="name">Tên tài khoản</label>
@@ -71,7 +71,9 @@
 
                             <div class="form-group">
                                 <label for="role_id">Chọn nhóm người dùng</label>
-                                <select name="role_id" id="role_id" class="form-control select2_init" multiple>
+                                <select name="role_id[]" id="role_id"
+                                        class="form-control select2_init @error('role_id') is-invalid @enderror"
+                                        multiple>
                                     <option value=""></option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
