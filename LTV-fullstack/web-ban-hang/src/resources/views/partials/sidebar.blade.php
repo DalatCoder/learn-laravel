@@ -71,6 +71,15 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('roles.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-tag"></i>
+                        <p>
+                            Nhóm tài khoản
+                        </p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>
