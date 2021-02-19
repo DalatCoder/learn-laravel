@@ -19,7 +19,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <form action="{{ route('users.store') }}" method="POST" class="col-md-12">
+                    <form action="{{ route('roles.store') }}" method="POST" class="col-md-12">
                         @csrf
                         <div>
 
@@ -79,7 +79,7 @@
                             </div>
                         @endforeach
 
-                        <button type="submit" class="btn btn-primary">Thêm</button>
+                        <button type="submit" class="btn btn-primary mb-5">Thêm</button>
                     </form>
                 </div>
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoleAddRequest;
 use App\Permission;
 use App\Role;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AdminRoleController extends Controller
 {
@@ -31,5 +33,31 @@ class AdminRoleController extends Controller
         return view('admin.role.create', [
             'permissionParents' => $permissionParents
         ]);
+    }
+
+    public function store(RoleAddRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $role = $this->role->create([
+                'name' => $request['name'],
+                'display_name' => $request['display_name'],
+            ]);
+
+            if ($request->has('permission_ids')) {
+                $role->permissions()->attach($request['permission_ids']);
+            }
+
+            DB::commit();
+
+            return redirect()->route('roles.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+        }
+
     }
 }
