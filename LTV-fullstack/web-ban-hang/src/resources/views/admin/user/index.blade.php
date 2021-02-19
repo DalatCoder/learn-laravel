@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{ route('sliders.create') }}" class="btn btn-success float-right my-2">Thêm người dùng</a>
+                        <a href="{{ route('users.create') }}" class="btn btn-success float-right my-2">Thêm người dùng</a>
                     </div>
                     <div class="col-md-12">
                         <table class="table table-bordered table-hover">

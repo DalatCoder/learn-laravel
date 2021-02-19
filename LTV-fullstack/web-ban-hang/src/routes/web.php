@@ -183,5 +183,10 @@ Route::prefix('admin')->group(function () {
             'as' => 'users.index',
             'uses' => 'AdminUserController@index'
         ]);
+
+        Route::get('/create', [
+            'as' => 'users.create',
+            'uses' => 'AdminUserController@create'
+        ]);
     });
 });
