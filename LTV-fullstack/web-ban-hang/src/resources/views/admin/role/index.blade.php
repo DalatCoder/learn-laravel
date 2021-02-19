@@ -36,7 +36,7 @@
                                     <td>{{ $role->name }}</td>
                                     <td>{{ $role->display_name }}</td>
                                     <td>
-                                        <a href="{{ route('users.edit', [$role->id]) }}"
+                                        <a href="{{ route('roles.edit', [$role->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('users.delete', [$role->id]) }}"
                                            data-url="{{ route('users.delete', [$role->id]) }}"

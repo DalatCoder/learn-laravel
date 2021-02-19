@@ -225,5 +225,10 @@ Route::prefix('admin')->group(function () {
             'as' => 'roles.store',
             'uses' => 'AdminRoleController@store'
         ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'roles.edit',
+            'uses' => 'AdminRoleController@edit'
+        ]);
     });
 });

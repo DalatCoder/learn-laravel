@@ -58,6 +58,18 @@ class AdminRoleController extends Controller
             $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
             Log::error($message);
         }
+    }
 
+    public function edit($id)
+    {
+        $role = $this->role->findOrFail($id);
+        $role_permissions = $role->permissions;
+        $permissionParents = $this->permission->where('parent_id', 0)->get();
+
+        return view('admin.role.edit', [
+            'role' => $role,
+            'role_permissions' => $role_permissions,
+            'permissionParents' => $permissionParents
+        ]);
     }
 }
