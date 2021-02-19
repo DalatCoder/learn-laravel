@@ -2,5 +2,8 @@
 
 > Tại channel Lập trình viên Fullstack - Khóa học laravel xây dựng web bán hàng thực tế. [Xem tại đây](https://www.youtube.com/channel/UCCkH-votwCOpd6FjCoQiWoA)
 
-## 1. Thiết kế cơ sở dữ liệu
+## 1. Cơ sở dữ liệu lưu trữ
 ![Cơ sở dữ liệu trang web bán quần áo](./md_assets/db.png)
+
+## 2. Cơ sở dữ liệu phân quyền
+![Cơ sở dữ liệu phân quyền](./md_assets/db_role.png)
