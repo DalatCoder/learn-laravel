@@ -19,8 +19,9 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <form action="{{ route('roles.store') }}" method="POST" class="col-md-12">
+                    <form action="{{ route('roles.update', ['id' => $role->id]) }}" method="POST" class="col-md-12">
                         @csrf
+                        @method('PUT')
                         <div>
 
                             <div class="form-group">

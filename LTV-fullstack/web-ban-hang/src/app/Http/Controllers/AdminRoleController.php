@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleAddRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use App\Permission;
 use App\Role;
 use Illuminate\Support\Facades\DB;
@@ -71,5 +72,32 @@ class AdminRoleController extends Controller
             'role_permissions' => $role_permissions,
             'permissionParents' => $permissionParents
         ]);
+    }
+
+    public function update(RoleUpdateRequest $request, $id)
+    {
+        $role = $this->role->findOrFail($id);
+
+        try {
+            DB::beginTransaction();
+
+            $role->update([
+                'name' => $request['name'],
+                'display_name' => $request['display_name'],
+            ]);
+
+            if ($request->has('permission_ids')) {
+                $role->permissions()->sync($request['permission_ids']);
+            }
+
+            DB::commit();
+
+            return redirect()->route('roles.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+        }
     }
 }

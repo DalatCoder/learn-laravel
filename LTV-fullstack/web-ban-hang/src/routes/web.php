@@ -230,5 +230,10 @@ Route::prefix('admin')->group(function () {
             'as' => 'roles.edit',
             'uses' => 'AdminRoleController@edit'
         ]);
+
+        Route::put('/update/{id}', [
+           'as' => 'roles.update',
+           'uses' => 'AdminRoleController@update'
+        ]);
     });
 });
