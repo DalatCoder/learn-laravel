@@ -8,6 +8,10 @@
     <link href="{{ asset('admin_assets/main.css') }}" rel="stylesheet"/>
 @endsection
 
+@section('js')
+    <script src="{{ asset('admin_assets/role/create/create.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Nhóm Người Dùng'])
@@ -55,7 +59,8 @@
                         @foreach($permissionParents as $permissionParent)
                             <div class="card border-primary my-3">
                                 <h4 class="card-header">
-                                    <label for=""><input type="checkbox" value=""></label> {{ $permissionParent->name }}
+                                    <label for=""><input type="checkbox" value=""
+                                                         class="checkbox_wrapper"></label> {{ $permissionParent->name }}
                                 </h4>
                                 <div class="row">
                                     @foreach($permissionParent->children as $permissionChildren)
@@ -63,6 +68,7 @@
                                             <h5 class="card-title">
                                                 <label for="">
                                                     <input type="checkbox" name="permission_ids[]"
+                                                           class="checkbox_child"
                                                            value="{{ $permissionChildren->id }}">
                                                 </label>
                                                 {{ $permissionChildren->name }}
