@@ -59,4 +59,18 @@ class AdminUserController extends Controller
             Log::error($message);
         }
     }
+
+    public function edit($id)
+    {
+        $user = $this->user->findOrFail($id);
+        $roles = $this->role->all();
+        $user_roles = $user->roles()->get();
+
+        return view('admin.user.edit', [
+            'user' => $user,
+            'user_roles' => $user_roles,
+            'roles' => $roles
+        ]);
+    }
 }
+

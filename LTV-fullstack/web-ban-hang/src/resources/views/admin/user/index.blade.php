@@ -36,7 +36,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <a href="{{ route('sliders.edit', [$user->id]) }}"
+                                        <a href="{{ route('users.edit', [$user->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('sliders.delete', [$user->id]) }}"
                                            data-url="{{ route('sliders.delete', [$user->id]) }}"

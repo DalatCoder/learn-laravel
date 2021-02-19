@@ -193,5 +193,10 @@ Route::prefix('admin')->group(function () {
             'as' => 'users.store',
             'uses' => 'AdminUserController@store'
         ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'users.edit',
+            'uses' => 'AdminUserController@edit'
+        ]);
     });
 });
