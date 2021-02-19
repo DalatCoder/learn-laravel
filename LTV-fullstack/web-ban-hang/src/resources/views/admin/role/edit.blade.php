@@ -57,6 +57,13 @@
 
                         </div>
 
+                        <div>
+                            <label for="" class="text-primary">
+                                <input type="checkbox" class="checkbox_all">
+                                Chọn tất cả
+                            </label>
+                        </div>
+
                         @foreach($permissionParents as $permissionParent)
                             <div class="card border-primary my-3">
                                 <h4 class="card-header">
