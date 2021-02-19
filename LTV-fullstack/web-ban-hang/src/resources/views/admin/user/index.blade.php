@@ -38,8 +38,8 @@
                                     <td>
                                         <a href="{{ route('users.edit', [$user->id]) }}"
                                            class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('sliders.delete', [$user->id]) }}"
-                                           data-url="{{ route('sliders.delete', [$user->id]) }}"
+                                        <a href="{{ route('users.delete', [$user->id]) }}"
+                                           data-url="{{ route('users.delete', [$user->id]) }}"
                                            data-title="Tài khoản người dùng"
                                            class="btn btn-danger action-delete">Xóa</a>
                                     </td>

@@ -99,5 +99,26 @@ class AdminUserController extends Controller
             Log::error($message);
         }
     }
+
+    public function delete($id)
+    {
+        $user = $this->user->findOrFail($id);
+
+        try {
+            $user->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
+    }
 }
 
