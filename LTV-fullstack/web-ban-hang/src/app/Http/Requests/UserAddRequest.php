@@ -24,7 +24,7 @@ class UserAddRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|unique:users,name|max:255',
+            'name' => 'bail|required|max:255',
             'email' => 'bail|required|email|unique:users,email|max:255',
             'password' => 'required',
             'role_id' => 'bail|required|exists:roles,id'
@@ -35,7 +35,6 @@ class UserAddRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên người dùng không được để trống',
-            'name.unique' => 'Người dùng có cùng tên đã tồn tại, vui lòng chọn tên khác',
             'name.max' => 'Tên người dùng không được vượt quá 255 kí tự',
             'email.required' => 'Email không được để trống',
             'email.unique' => 'Tài khoản có cùng email đã tồn tại, vui lòng chọn email khác',

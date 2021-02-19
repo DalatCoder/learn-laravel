@@ -40,20 +40,14 @@ class AdminUserController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             $user = $this->user->create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password'])
             ]);
 
-            $roleIds = $request['role_id'];
-            foreach ($roleIds as $roleId) {
-                DB::table('role_user')->insert([
-                    'role_id' => $roleId,
-                    'user_id' => $user->id
-                ]);
-            }
+            $user->roles()->attach($request['role_id']);
 
             DB::commit();
             return redirect()->route('users.index');
