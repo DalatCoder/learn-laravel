@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAddRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Role;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -71,6 +72,32 @@ class AdminUserController extends Controller
             'user_roles' => $user_roles,
             'roles' => $roles
         ]);
+    }
+
+    public function update(UserUpdateRequest $request, $id)
+    {
+        $user = $this->user->findOrFail($id);
+
+        try {
+            DB::beginTransaction();
+
+            $user->update([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password'])
+            ]);
+
+            $user->roles()->sync($request['role_id']);
+
+            DB::commit();
+            return redirect()->route('users.index');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+        }
     }
 }
 

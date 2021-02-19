@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('users.update', ['id' => $user->id]) }}" method="POST">
                             @csrf
                             @method('PUT')
 
