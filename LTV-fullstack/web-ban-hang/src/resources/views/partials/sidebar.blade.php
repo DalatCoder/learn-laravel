@@ -11,7 +11,7 @@
                 <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -76,6 +76,15 @@
                         <i class="nav-icon fas fa-user-tag"></i>
                         <p>
                             Nhóm tài khoản
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('permissions.create') }}" class="nav-link">
+                        <i class="nav-icon fas fa-exclamation-circle"></i>
+                        <p>
+                            Quản lý nhóm quyền
                         </p>
                     </a>
                 </li>
