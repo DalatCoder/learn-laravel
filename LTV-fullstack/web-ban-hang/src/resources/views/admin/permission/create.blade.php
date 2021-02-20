@@ -4,6 +4,10 @@
     <title>Tạo nhóm quyền mới</title>
 @endsection
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('admin_assets/main.css') }}">
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         @include('partials.content-header', ['key' => 'Tạo', 'name' => 'Nhóm Quyền'])
@@ -12,45 +16,33 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ route('menus.store') }}" method="POST">
+                        <form action="{{ route('permissions.store') }}" method="POST">
                             @csrf
 
                             <div class="form-group">
-                                <label for="parent_id">Chọn nhóm phân quyền</label>
-                                <select name="parent_id" id="parent_id" class="form-control">
-                                    <option value="0">Chọn nhóm phân quyền</option>
+                                <label for="module_parent">Chọn tài nguyên</label>
+                                <select name="module_parent" id="module_parent"
+                                        class="form-control @error('module_parent') is-invalid @enderror">
+                                    <option value="">Chọn tài nguyên</option>
+                                    @foreach(array_keys($table_modules) as $key)
+                                        <option value="{{ $key . '@' . $table_modules[$key] }}">{{ $table_modules[$key] }}</option>
+                                    @endforeach
                                 </select>
+                                @error('module_parent')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="">
-                                            <input type="checkbox" value="list">
-                                            Xem danh sách
-                                        </label>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label for="">
-                                            <input type="checkbox" value="add">
-                                            Tạo mới
-                                        </label>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label for="">
-                                            <input type="checkbox" value="edit">
-                                            Cập nhật
-                                        </label>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label for="">
-                                            <input type="checkbox" value="delete">
-                                            Xóa
-                                        </label>
-                                    </div>
+                                    @foreach(array_keys($module_children) as $key)
+                                        <div class="col-md-3">
+                                            <label for="">
+                                                <input type="checkbox" name="module_children[]" value="{{ $key . '@' . $module_children[$key] }}">
+                                                {{ $module_children[$key] }}
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
 

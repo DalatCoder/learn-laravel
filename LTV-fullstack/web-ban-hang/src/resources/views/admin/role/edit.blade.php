@@ -68,7 +68,7 @@
                             <div class="card border-primary my-3">
                                 <h4 class="card-header">
                                     <label for=""><input type="checkbox" value=""
-                                                         class="checkbox_wrapper"></label> {{ $permissionParent->name }}
+                                                         class="checkbox_wrapper"></label> {{ $permissionParent->display_name }}
                                 </h4>
                                 <div class="row">
                                     @foreach($permissionParent->children as $permissionChildren)
@@ -80,7 +80,7 @@
                                                            class="checkbox_child"
                                                            value="{{ $permissionChildren->id }}">
                                                 </label>
-                                                {{ $permissionChildren->name }}
+                                                {{ $permissionChildren->display_name }}
                                             </h5>
                                         </div>
                                     @endforeach

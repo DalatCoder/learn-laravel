@@ -248,5 +248,10 @@ Route::prefix('admin')->group(function () {
            'as' => 'permissions.create',
            'uses' => 'AdminPermissionController@create'
        ]);
+
+       Route::post('/store', [
+           'as' => 'permissions.store',
+           'uses' => 'AdminPermissionController@store'
+       ]);
     });
 });
