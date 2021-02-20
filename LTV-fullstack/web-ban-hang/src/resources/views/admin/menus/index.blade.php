@@ -1,7 +1,12 @@
 @extends('layouts.admin')
 
 @section('title')
-    <title>Trang menu</title>
+    <title>Trang thêm menu</title>
+@endsection
+
+@section('js')
+    <script src="{{ asset('vendor/sweetAlert2/sweetalert2@10.js') }}"></script>
+    <script src="{{ asset('admin_assets/main.js') }}"></script>
 @endsection
 
 @section('content')
@@ -33,7 +38,9 @@
                                         <a href="{{ route('menus.edit', [$menu->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('menus.delete', [$menu->id]) }}"
-                                           class="btn btn-danger">Xóa</a>
+                                           data-url="{{ route('menus.delete', [$menu->id]) }}"
+                                           data-title="Menu"
+                                           class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach

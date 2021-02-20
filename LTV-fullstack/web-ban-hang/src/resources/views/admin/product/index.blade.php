@@ -10,7 +10,7 @@
 
 @section('js')
     <script src="{{ asset('vendor/sweetAlert2/sweetalert2@10.js') }}"></script>
-    <script src="{{ asset('admin_assets/product/index/index.js') }}"></script>
+    <script src="{{ asset('admin_assets/main.js') }}"></script>
 @endsection
 
 @section('content')
@@ -53,6 +53,7 @@
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('products.delete', ['id' => $product->id]) }}"
                                            data-url="{{ route('products.delete', ['id' => $product->id]) }}"
+                                           data-title="Sản phẩm"
                                            class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>

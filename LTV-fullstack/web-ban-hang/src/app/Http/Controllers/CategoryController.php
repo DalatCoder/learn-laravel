@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Components\Recursive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
@@ -18,7 +19,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('admin.category.index', ['categories' => $this->category->latest()->paginate(5)]);
+        return view('admin.category.index', ['categories' => $this->category->latest()->paginate(10)]);
     }
 
     public function create()
@@ -68,8 +69,21 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $category = $this->category->findOrFail($id);
-        $category->delete();
 
-        return redirect(route('categories.index'));
+        try {
+            $category->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
     }
 }

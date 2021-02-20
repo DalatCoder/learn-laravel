@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Components\MenuRecursive;
 use App\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class MenuController extends Controller
@@ -20,7 +21,7 @@ class MenuController extends Controller
 
     public function index()
     {
-        return view('admin.menus.index', ['menus' => $this->menu->latest()->paginate(5)]);
+        return view('admin.menus.index', ['menus' => $this->menu->latest()->paginate(10)]);
     }
 
     public function create()
@@ -63,8 +64,21 @@ class MenuController extends Controller
     public function delete($id)
     {
         $menu = $this->menu->findOrFail($id);
-        $menu->delete();
 
-        return redirect(route('menus.index'));
+        try {
+            $menu->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+        } catch (\Exception $e) {
+            $message = 'Message: ' . $e->getMessage() . '. Line: ' . $e->getLine();
+            Log::error($message);
+
+            return response()->json([
+                'code' => 500,
+                'message' => 'fail'
+            ], 500);
+        }
     }
 }

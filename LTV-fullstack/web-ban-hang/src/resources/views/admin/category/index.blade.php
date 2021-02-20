@@ -4,6 +4,11 @@
     <title>Trang danh mục sản phẩm</title>
 @endsection
 
+@section('js')
+    <script src="{{ asset('vendor/sweetAlert2/sweetalert2@10.js') }}"></script>
+    <script src="{{ asset('admin_assets/main.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="content-wrapper">
     @include('partials.content-header', ['name' => 'Danh Mục', 'key' => 'Tất Cả'])
@@ -34,7 +39,9 @@
                                         <a href="{{ route('categories.edit', [$category->id]) }}"
                                            class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('categories.delete', [$category->id]) }}"
-                                           class="btn btn-danger">Xóa</a>
+                                           data-url="{{ route('categories.delete', [$category->id]) }}"
+                                           data-title="Danh mục sản phẩm"
+                                           class="btn btn-danger action-delete">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach
