@@ -25,6 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('category-list', function ($user) {
+            return $user->checkPermissionAccess('list_category');
+        });
+
+        Gate::define('menu-list', function ($user) {
+            return $user->checkPermissionAccess('list_menu');
+        });
     }
 }

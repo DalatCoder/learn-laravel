@@ -21,7 +21,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::get('/', [
             'as' => 'categories.index',
-            'uses' => 'CategoryController@index'
+            'uses' => 'CategoryController@index',
+            'middleware' => 'can:category-list'
         ]);
 
         Route::post('/', [
