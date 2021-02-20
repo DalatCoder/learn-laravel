@@ -40,11 +40,17 @@ class HomeController extends Controller
             }
         }
 
+        $category_tab_products = [];
+        foreach ($categories as $index => $parentCategory) {
+            $category_tab_products[$index] = $parentCategory->products()->latest('view_counts', 'desc')->take(5)->get();
+        }
+
         return view('home.home', [
             'sliders' => $sliders,
             'categories' => $categories,
             'feature_products' => $feature_products,
-            'recommend_products' => $recommend_products
+            'recommend_products' => $recommend_products,
+            'category_tab_products' => $category_tab_products
         ]);
     }
 }
