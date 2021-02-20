@@ -17,6 +17,7 @@ Route::get('/home', function () {
 Route::prefix('admin')->group(function () {
     Route::get('/', 'AdminController@loginAdmin')->name('login.show');
     Route::post('/', 'AdminController@postLoginAdmin')->name('login.login');
+    Route::get('/logout', 'AdminController@logoutAdmin')->name('login.logout');
 
     Route::prefix('categories')->group(function () {
         Route::get('/', [
