@@ -26,9 +26,14 @@ Route::get('/dashboard', [
     'uses' => 'AdminController@show_dashboard'
 ]);
 
-Route::post('admin-dashboard', [
+Route::post('/admin-dashboard', [
     'as' => 'admin.login',
     'uses' => 'AdminController@dashboard'
+]);
+
+Route::get('/logout', [
+    'as' => 'admin.logout',
+    'uses' => 'AdminController@logout_admin'
 ]);
 
 

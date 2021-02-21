@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
+session_start();
 
 class AdminController extends Controller
 {
@@ -27,8 +30,22 @@ class AdminController extends Controller
             ->where('admin_password', $admin_password)
             ->first();
 
-        if (!empty($result)) return redirect()->route('admin.dashboard');
+        if (!empty($result)) {
+            Session::put('admin_id', $result->admin_id);
+            Session::put('admin_name', $result->admin_name);
 
-        abort(401);
+            return redirect()->route('admin.dashboard');
+        }
+
+        Session::put('message', 'Thông tin đăng nhập không hợp lệ! Vui lòng nhập lại.');
+        return redirect()->route('admin.home');
+    }
+
+    public function logout_admin()
+    {
+        Session::put('admin_id', null);
+        Session::put('admin_name', null);
+        
+        return redirect()->route('admin.home');
     }
 }

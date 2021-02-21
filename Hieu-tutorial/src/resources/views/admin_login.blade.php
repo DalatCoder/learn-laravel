@@ -20,10 +20,22 @@
 <div class="log-w3">
     <div class="w3layouts-main">
         <h2>Đăng nhập Quản Trị Viên</h2>
+
+        <?php
+        $message = \Illuminate\Support\Facades\Session::get('message');
+        if (!empty($message)) {
+            echo '<div class="alert alert-danger">' . $message . '</div>';
+            \Illuminate\Support\Facades\Session::put('message', null);
+        }
+        ?>
+
         <form action="{{ route('admin.login') }}" method="post">
             @csrf
-            <input type="email" class="ggg" name="admin_email" placeholder="Email" required="">
-            <input type="password" class="ggg" name="admin_password" placeholder="Mật khẩu" required="">
+            <input type="email" class="ggg" name="admin_email" placeholder="Email" required=""
+                   value="{{ old('admin_email') }}">
+            <input type="password" class="ggg" name="admin_password" placeholder="Mật khẩu" required=""
+                   value="{{ old('admin_password') }}">
+
             <span><input type="checkbox"/>Duy trì đăng nhập</span>
             <h6><a href="#">Quên mật khẩu</a></h6>
             <div class="clearfix"></div>

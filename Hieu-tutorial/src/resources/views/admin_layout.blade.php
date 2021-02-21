@@ -46,13 +46,18 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <img alt="" src="{{ asset('server/images/2.png') }}">
-                        <span class="username">Nguyễn Trọng Hiếu</span>
+                        <span class="username">
+                            <?php
+                            $admin_name = \Illuminate\Support\Facades\Session::get('admin_name');
+                            if (!empty($admin_name)) echo $admin_name;
+                            ?>
+                        </span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
                         <li><a href="#"><i class=" fa fa-suitcase"></i>Tài khoản</a></li>
                         <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-                        <li><a href="login.html"><i class="fa fa-key"></i> Đăng xuất</a></li>
+                        <li><a href="{{ route('admin.logout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
                     </ul>
                 </li>
                 <!-- user login dropdown end -->
