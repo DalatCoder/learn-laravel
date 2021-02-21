@@ -4,7 +4,7 @@
 
         @foreach($category_limits as $parent_category)
             <li class="dropdown">
-                <a href="#">{{ $parent_category->name }}
+                <a href="{{route('category.product', ['slug' => $parent_category->slug, 'id' => $parent_category->id])}}">{{ $parent_category->name }}
                     @if($parent_category->children()->count() > 0)
                         <i class="fa fa-angle-down"></i>
                     @endif

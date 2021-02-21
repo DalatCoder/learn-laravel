@@ -2,7 +2,7 @@
     <ul role="menu" class="sub-menu">
         @foreach($parent_category->children as $child_category)
             <li>
-                <a href="shop.html">{{ $child_category->name }}
+                <a href="{{route('category.product', ['slug' => $child_category->slug, 'id' => $child_category->id])}}">{{ $child_category->name }}
                     @if($child_category->children()->count() > 0)
                         <i class="fa fa-angle-down"></i>
                     @endif

@@ -6,7 +6,9 @@
             @if(count($category->children) == 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><a href="#">{{ $category->name }}</a></h4>
+                        <h4 class="panel-title"><a
+                                href="{{ route('category.product', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}</a>
+                        </h4>
                     </div>
                 </div>
             @else
@@ -23,7 +25,9 @@
                         <div class="panel-body">
                             <ul>
                                 @foreach($category->children as $categoryChildren)
-                                <li><a href="#">{{ $categoryChildren->name }}</a></li>
+                                    <li>
+                                        <a href="{{ route('category.product', ['slug' => $categoryChildren->slug, 'id' => $categoryChildren->id]) }}">{{ $categoryChildren->name }}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
