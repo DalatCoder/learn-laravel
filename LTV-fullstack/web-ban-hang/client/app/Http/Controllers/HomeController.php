@@ -45,12 +45,15 @@ class HomeController extends Controller
             $category_tab_products[$index] = $parentCategory->products()->latest('view_counts', 'desc')->take(5)->get();
         }
 
+        $category_limits = $this->category->where('parent_id', 0)->take(3)->get();
+
         return view('home.home', [
             'sliders' => $sliders,
             'categories' => $categories,
             'feature_products' => $feature_products,
             'recommend_products' => $recommend_products,
-            'category_tab_products' => $category_tab_products
+            'category_tab_products' => $category_tab_products,
+            'category_limits' => $category_limits
         ]);
     }
 }
