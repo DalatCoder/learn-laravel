@@ -36,4 +36,26 @@ Route::get('/logout', [
     'uses' => 'AdminController@logout_admin'
 ]);
 
+/*
+ * Admin Category
+ */
+Route::prefix('categories')->group(function() {
+
+    Route::get('/', [
+        'as' => 'categories.index',
+        'uses' => 'AdminCategoryController@index'
+    ]);
+
+    Route::get('/create', [
+        'as' => 'categories.create',
+        'uses' => 'AdminCategoryController@create'
+    ]);
+
+    Route::post('/store', [
+        'as' => 'categories.store',
+        'uses' => 'AdminCategoryController@store'
+    ]);
+
+});
+
 

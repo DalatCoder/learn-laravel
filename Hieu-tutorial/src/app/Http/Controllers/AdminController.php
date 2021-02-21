@@ -45,7 +45,7 @@ class AdminController extends Controller
     {
         Session::put('admin_id', null);
         Session::put('admin_name', null);
-        
+
         return redirect()->route('admin.home');
     }
 }

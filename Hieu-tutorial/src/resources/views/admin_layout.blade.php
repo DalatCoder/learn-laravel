@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trang quản lý</title>
+    <title>Trang quản lý | @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
@@ -87,8 +87,8 @@
                             <span>Danh mục sản phẩm</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="typography.html">Thêm danh mục</a></li>
-                            <li><a href="glyphicon.html">Liệt kê</a></li>
+                            <li><a href="{{ route('categories.create') }}">Thêm danh mục</a></li>
+                            <li><a href="{{ route('categories.index') }}">Liệt kê</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -103,14 +103,6 @@
         <section class="wrapper">
             @yield('content')
         </section>
-
-        <!-- footer -->
-        <div class="footer">
-            <div class="wthree-copyright">
-                <p>© 2021 Visitors. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
-            </div>
-        </div>
-        <!-- / footer -->
     </section>
     <!--main content end-->
 
