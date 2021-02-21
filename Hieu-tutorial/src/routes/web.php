@@ -16,5 +16,19 @@ Route::get('/', [
     'uses' => 'HomeController@index'
 ]);
 
+Route::get('/admin', [
+    'as' => 'admin.home',
+    'uses' => 'AdminController@index'
+]);
+
+Route::get('/dashboard', [
+    'as' => 'admin.dashboard',
+    'uses' => 'AdminController@show_dashboard'
+]);
+
+Route::post('admin-dashboard', [
+    'as' => 'admin.login',
+    'uses' => 'AdminController@dashboard'
+]);
 
 
