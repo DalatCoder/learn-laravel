@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdminCategory;
 use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Support\Facades\DB;
@@ -12,9 +13,16 @@ session_start();
 
 class AdminCategoryController extends Controller
 {
+    private $adminCategory;
+
+    public function __construct(AdminCategory $adminCategory)
+    {
+        $this->adminCategory = $adminCategory;
+    }
+
     public function index()
     {
-        $categories = DB::table('tbl_category')->whereNull('deleted_at')->latest()->paginate(10);
+        $categories = $this->adminCategory->latest()->paginate(10);
 
         return view('admin.category.index', compact(
             'categories'
@@ -34,23 +42,21 @@ class AdminCategoryController extends Controller
             'category_status' => $request['category_status']
         ];
 
-        DB::table('tbl_category')->insert($data);
+        $this->adminCategory->create($data);
+
         Session::put('message-success', 'Thêm danh mục sản phẩm "' . $request['category_name'] . '" thành công');
         return redirect()->route('categories.create');
     }
 
     public function active_status($id)
     {
-        $category = DB::table('tbl_category')->where('category_id', $id);
-        if (empty($category)) abort(404);
+        $category = $this->adminCategory->findOrFail($id);
 
         $category->update([
             'category_status' => 1
         ]);
 
-        $category_name = $category->first()->category_name;
-
-        $message = 'Hiển thị danh mục "' . $category_name . '" thành công!';
+        $message = 'Hiển thị danh mục "' . $category->category_name . '" thành công!';
 
         Session::put('message-success', $message);
         return redirect()->route('categories.index');
@@ -58,16 +64,13 @@ class AdminCategoryController extends Controller
 
     public function inactive_status($id)
     {
-        $category = DB::table('tbl_category')->where('category_id', $id);
-        if (empty($category)) abort(404);
+        $category = $this->adminCategory->findOrFail($id);
 
         $category->update([
             'category_status' => 0
         ]);
 
-        $category_name = $category->first()->category_name;
-
-        $message = 'Ẩn danh mục "' . $category_name . '" thành công!';
+        $message = 'Ẩn danh mục "' . $category->category_name . '" thành công!';
 
         Session::put('message-success', $message);
         return redirect()->route('categories.index');
@@ -75,8 +78,7 @@ class AdminCategoryController extends Controller
 
     public function edit($id)
     {
-        $category = $category = DB::table('tbl_category')->where('category_id', $id)->first();
-        if (empty($category)) abort(404);
+        $category = $this->adminCategory->findOrFail($id);
 
         return view('admin.category.edit', compact(
             'category'
@@ -85,8 +87,7 @@ class AdminCategoryController extends Controller
 
     public function update(CategoryUpdateRequest $request, $id)
     {
-        $category = $category = DB::table('tbl_category')->where('category_id', $id);
-        if (empty($category->first())) abort(404);
+        $category = $this->adminCategory->findOrFail($id);
 
         $data = [
             'category_name' => $request['category_name'],
@@ -102,12 +103,12 @@ class AdminCategoryController extends Controller
 
     public function delete($id)
     {
-        $category = $category = DB::table('tbl_category')->where('category_id', $id);
-        if (empty($category->first())) abort(404);
+        $category = $this->adminCategory->findOrFail($id);
 
-        $category->update(['deleted_at' => Carbon::now()]);
+        $category_name = $category->category_name;
+        $category->delete();
 
-        Session::put('message-success', 'Xóa danh mục sản phẩm "' . $category->first()->category_name . '" thành công');
+        Session::put('message-success', 'Xóa danh mục sản phẩm "' . $category_name . '" thành công');
         return redirect()->route('categories.index');
     }
 }

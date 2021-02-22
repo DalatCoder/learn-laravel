@@ -94,6 +94,17 @@
                             <li><a href="{{ route('categories.index') }}">Liệt kê</a></li>
                         </ul>
                     </li>
+
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-copyright"></i>
+                            <span>Thương hiệu sản phẩm</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="{{ route('brands.create') }}">Thêm thương hiệu</a></li>
+                            <li><a href="{{ route('brands.index') }}">Liệt kê</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- sidebar menu end-->
