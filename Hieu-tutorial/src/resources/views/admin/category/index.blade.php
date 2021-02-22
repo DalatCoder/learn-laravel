@@ -2,9 +2,11 @@
 
 @section('title', 'Liệt kê danh mục sản phẩm')
 
-@section('content')
-    @if()
+@section('notification')
+    @include('admin.components.notification_box')
+@endsection
 
+@section('content')
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -41,24 +43,32 @@
                             </label>
                         </th>
                         <th>Tên danh mục</th>
-                        <th>Hiển thị</th>
-                        <th>Ngày thêm</th>
+                        <th>Trạng thái</th>
                         <th style="width:30px;"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><label class="i-checks m-b-none"><input type="checkbox"
-                                                                    name="post[]"><i></i></label></td>
-                        <td>Xu hướng thời trang</td>
-                        <td><span class="text-ellipsis">Hiển thị</span></td>
-                        <td><span class="text-ellipsis">21.02.2021</span></td>
-                        <td>
-                            <a href="" class="active" ui-toggle-class=""><i
-                                    class="fa fa-pencil text-warning text-active"></i><i
-                                    class="fa fa-times text-danger text"></i></a>
-                        </td>
-                    </tr>
+                    @foreach($categories as $category)
+                        <tr>
+                            <td><label class="i-checks m-b-none"><input type="checkbox"
+                                                                        name="post[]"><i></i></label></td>
+                            <td>{{ $category->category_name }}</td>
+                            <td><span class="text-ellipsis">
+                                    @if($category->category_status == 0)
+                                        <a href="{{ route('categories.active-status', ['id' => $category->category_id]) }}"><i
+                                                class="fa fa-2x fa-eye"></i></a>
+                                    @else
+                                        <a href="{{ route('categories.inactive-status', ['id' => $category->category_id]) }}"><i
+                                                class="fa fa-2x fa-eye-slash"></i></a>
+                                    @endif</span>
+                            </td>
+                            <td>
+                                <a href="" class="active" ui-toggle-class=""><i
+                                        class="fa fa-pencil text-warning text-active"></i><i
+                                        class="fa fa-times text-danger text"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

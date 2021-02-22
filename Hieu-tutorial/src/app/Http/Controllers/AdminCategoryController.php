@@ -12,7 +12,11 @@ class AdminCategoryController extends Controller
 {
     public function index()
     {
-        return view('admin.category.index');
+        $categories = DB::table('tbl_category')->latest()->paginate(10);
+
+        return view('admin.category.index', compact(
+            'categories'
+        ));
     }
 
     public function create()
@@ -29,7 +33,41 @@ class AdminCategoryController extends Controller
         ];
 
         DB::table('tbl_category')->insert($data);
-        Session::put('message', 'Thêm danh mục sản phẩm thành công');
+        Session::put('message-success', 'Thêm danh mục sản phẩm "' . $request['category_name'] . '" thành công');
         return redirect()->route('categories.create');
+    }
+
+    public function active_status($id)
+    {
+        $category = DB::table('tbl_category')->where('category_id', $id);
+        if (empty($category)) abort(404);
+
+        $category->update([
+            'category_status' => 1
+        ]);
+
+        $category_name = $category->first()->category_name;
+
+        $message = 'Hiển thị danh mục "'. $category_name .'" thành công!';
+
+        Session::put('message-success', $message);
+        return redirect()->route('categories.index');
+    }
+
+    public function inactive_status($id)
+    {
+        $category = DB::table('tbl_category')->where('category_id', $id);
+        if (empty($category)) abort(404);
+
+        $category->update([
+            'category_status' => 0
+        ]);
+
+        $category_name = $category->first()->category_name;
+
+        $message = 'Ẩn danh mục "'. $category_name .'" thành công!';
+
+        Session::put('message-success', $message);
+        return redirect()->route('categories.index');
     }
 }

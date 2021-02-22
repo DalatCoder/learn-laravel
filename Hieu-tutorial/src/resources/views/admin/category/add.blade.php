@@ -2,21 +2,12 @@
 
 @section('title', 'Tạo danh mục sản phẩm')
 
+@section('notification')
+    @include('admin.components.notification_box')
+@endsection
+
 @section('content')
     <div class="row">
-        @if(\Illuminate\Support\Facades\Session::get('message'))
-            <div class="col-lg-12" id="notification">
-                <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('message')}}</div>
-            </div>
-            @php \Illuminate\Support\Facades\Session::put('message', null); @endphp
-
-            <script>
-                setTimeout(function () {
-                    document.getElementById('notification').style.display = 'none';
-                }, 3000);
-            </script>
-        @endif
-
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">

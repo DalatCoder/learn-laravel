@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{{ asset('server/css/monthly.css') }}">
     <script src="{{ asset('server/js/raphael-min.js') }}"></script>
     <script src="{{ asset('server/js/morris.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ asset('server/css/main-server.css') }}">
+    @yield('style')
 </head>
 <body>
 <section id="container">
@@ -101,6 +104,7 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
+            @yield('notification')
             @yield('content')
         </section>
     </section>
@@ -114,6 +118,8 @@
 <script src="{{ asset('server/js/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('server/js/jquery.nicescroll.js') }}"></script>
 <script src="{{ asset('server/js/jquery.scrollTo.js') }}"></script>
+
+@yield('script')
 
 </body>
 </html>

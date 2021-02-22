@@ -56,6 +56,15 @@ Route::prefix('categories')->group(function() {
         'uses' => 'AdminCategoryController@store'
     ]);
 
+    Route::get('/status/{id}/active', [
+        'as' => 'categories.active-status',
+        'uses' => 'AdminCategoryController@active_status'
+    ]);
+
+    Route::get('/status/{id}/inactive', [
+        'as' => 'categories.inactive-status',
+        'uses' => 'AdminCategoryController@inactive_status'
+    ]);
 });
 
 
