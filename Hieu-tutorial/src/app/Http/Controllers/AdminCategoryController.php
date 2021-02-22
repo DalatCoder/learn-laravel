@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -68,6 +69,33 @@ class AdminCategoryController extends Controller
         $message = 'Ẩn danh mục "'. $category_name .'" thành công!';
 
         Session::put('message-success', $message);
+        return redirect()->route('categories.index');
+    }
+
+    public function edit($id)
+    {
+        $category = $category = DB::table('tbl_category')->where('category_id', $id)->first();
+        if (empty($category)) abort(404);
+
+        return view('admin.category.edit', compact(
+            'category'
+        ));
+    }
+
+    public function update(CategoryUpdateRequest $request, $id)
+    {
+        $category = $category = DB::table('tbl_category')->where('category_id', $id);
+        if (empty($category->first())) abort(404);
+
+        $data = [
+            'category_name' => $request['category_name'],
+            'category_desc' => $request['category_desc'],
+            'category_status' => $request['category_status']
+        ];
+
+        $category->update($data);
+
+        Session::put('message-success', 'Cập nhật danh mục sản phẩm "' . $request['category_name'] . '" thành công');
         return redirect()->route('categories.index');
     }
 }

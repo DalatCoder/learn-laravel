@@ -44,7 +44,7 @@
                         </th>
                         <th>Tên danh mục</th>
                         <th>Trạng thái</th>
-                        <th style="width:30px;"></th>
+                        <th style="width:90px;"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,9 +63,13 @@
                                     @endif</span>
                             </td>
                             <td>
-                                <a href="" class="active" ui-toggle-class=""><i
-                                        class="fa fa-pencil text-warning text-active"></i><i
-                                        class="fa fa-times text-danger text"></i></a>
+                                <a href="{{ route('categories.edit', ['id' => $category->category_id]) }}"
+                                   class="active d-block" ui-toggle-class=""><i
+                                        class="fa fa-2x fa-pencil text-warning text-active"></i>
+                                </a>
+                                <a href="" class="active d-block" ui-toggle-class="">
+                                    <i class="fa fa-2x fa-times text-danger text"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

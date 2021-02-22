@@ -65,6 +65,16 @@ Route::prefix('categories')->group(function() {
         'as' => 'categories.inactive-status',
         'uses' => 'AdminCategoryController@inactive_status'
     ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'categories.edit',
+        'uses' => 'AdminCategoryController@edit'
+    ]);
+
+    Route::put('/update/{id}', [
+        'as' => 'categories.update',
+        'uses' => 'AdminCategoryController@update'
+    ]);
 });
 
 
