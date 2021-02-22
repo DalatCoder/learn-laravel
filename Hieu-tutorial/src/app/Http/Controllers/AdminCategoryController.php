@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
 
 session_start();
 
@@ -13,7 +14,7 @@ class AdminCategoryController extends Controller
 {
     public function index()
     {
-        $categories = DB::table('tbl_category')->latest()->paginate(10);
+        $categories = DB::table('tbl_category')->whereNull('deleted_at')->latest()->paginate(10);
 
         return view('admin.category.index', compact(
             'categories'
@@ -49,7 +50,7 @@ class AdminCategoryController extends Controller
 
         $category_name = $category->first()->category_name;
 
-        $message = 'Hiển thị danh mục "'. $category_name .'" thành công!';
+        $message = 'Hiển thị danh mục "' . $category_name . '" thành công!';
 
         Session::put('message-success', $message);
         return redirect()->route('categories.index');
@@ -66,7 +67,7 @@ class AdminCategoryController extends Controller
 
         $category_name = $category->first()->category_name;
 
-        $message = 'Ẩn danh mục "'. $category_name .'" thành công!';
+        $message = 'Ẩn danh mục "' . $category_name . '" thành công!';
 
         Session::put('message-success', $message);
         return redirect()->route('categories.index');
@@ -96,6 +97,17 @@ class AdminCategoryController extends Controller
         $category->update($data);
 
         Session::put('message-success', 'Cập nhật danh mục sản phẩm "' . $request['category_name'] . '" thành công');
+        return redirect()->route('categories.index');
+    }
+
+    public function delete($id)
+    {
+        $category = $category = DB::table('tbl_category')->where('category_id', $id);
+        if (empty($category->first())) abort(404);
+
+        $category->update(['deleted_at' => Carbon::now()]);
+
+        Session::put('message-success', 'Xóa danh mục sản phẩm "' . $category->first()->category_name . '" thành công');
         return redirect()->route('categories.index');
     }
 }

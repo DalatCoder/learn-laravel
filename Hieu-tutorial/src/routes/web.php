@@ -75,6 +75,11 @@ Route::prefix('categories')->group(function() {
         'as' => 'categories.update',
         'uses' => 'AdminCategoryController@update'
     ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'categories.delete',
+        'uses' => 'AdminCategoryController@delete'
+    ]);
 });
 
 

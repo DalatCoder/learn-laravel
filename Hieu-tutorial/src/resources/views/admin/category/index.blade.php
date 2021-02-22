@@ -67,7 +67,10 @@
                                    class="active d-block" ui-toggle-class=""><i
                                         class="fa fa-2x fa-pencil text-warning text-active"></i>
                                 </a>
-                                <a href="" class="active d-block" ui-toggle-class="">
+                                <a href="{{ route('categories.delete', ['id' => $category->category_id]) }}"
+                                   class="active d-block" ui-toggle-class=""
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục sản phẩm: {{ $category->category_name }}');"
+                                >
                                     <i class="fa fa-2x fa-times text-danger text"></i>
                                 </a>
                             </td>
