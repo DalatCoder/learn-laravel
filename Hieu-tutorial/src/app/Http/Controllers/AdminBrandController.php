@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\AdminBrand;
-use Illuminate\Http\Request;
+use App\Http\Requests\BrandCreateRequest;
+use Illuminate\Support\Facades\Session;
+
+session_start();
 
 class AdminBrandController extends Controller
 {
@@ -27,8 +30,15 @@ class AdminBrandController extends Controller
         return view('admin.brand.add');
     }
 
-    public function store()
+    public function store(BrandCreateRequest $request)
     {
+        $this->brand->create([
+            'brand_name' => $request['brand_name'],
+            'brand_desc' => $request['brand_desc'],
+            'brand_status' => $request['brand_status']
+        ]);
 
+        Session::put('message-success', 'Thêm thương hiệu sản phẩm "' . $request['brand_name'] . '" thành công');
+        return redirect()->route('brands.create');
     }
 }
