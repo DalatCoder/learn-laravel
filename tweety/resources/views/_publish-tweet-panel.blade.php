@@ -15,6 +15,8 @@
                 src="{{ auth()->user()->getAvatarAttribute() }}"
                 class="rounded-full mr-2"
                 alt="Your avatar"
+                width="50"
+                height="50"
             >
 
             <button
