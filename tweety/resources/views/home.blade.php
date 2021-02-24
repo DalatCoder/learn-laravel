@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="lg:flex lg:justify-between">
+    <div class="lg:flex lg:justify-between lg:items-start">
         <div class="lg:w-32">
-            @include('_sidebar-links');
+            @include('_sidebar-links')
         </div>
 
         <div class="lg:flex-1 lg:mx-10" style="max-width: 700px">
