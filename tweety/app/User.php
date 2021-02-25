@@ -11,7 +11,7 @@ class User extends Authenticatable {
     use Notifiable, Followable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'name', 'email', 'password',
     ];
 
     protected $hidden = [
@@ -24,7 +24,7 @@ class User extends Authenticatable {
 
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'username';
     }
 
     public function getAvatarAttribute()
@@ -49,7 +49,7 @@ class User extends Authenticatable {
 
     public function path($append = '')
     {
-        $path = route('profile', $this->name);
+        $path = route('profile', $this->username);
 
         return $append ? $path . '/' . $append : $path;
     }
