@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Tweet;
 use Illuminate\Http\Request;
 
-class TweetController extends Controller
-{
+class TweetController extends Controller {
+
     public function index()
     {
         return view('tweets.index', [
@@ -23,6 +23,7 @@ class TweetController extends Controller
             'body' => $attribues['body']
         ]);
 
-        return redirect('/home');
+        return redirect()->route('home');
     }
+
 }

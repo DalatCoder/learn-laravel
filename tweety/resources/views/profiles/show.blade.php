@@ -1,21 +1,30 @@
 @component('components.app')
 
     <header class="mb-6 relative">
-        <img src="https://picsum.photos/700/223"
-             alt="Cover"
-             class="mb-2 rounded-lg">
+        <div class="relative">
+            <img src="https://picsum.photos/700/223"
+                 alt="Cover"
+                 class="mb-2 rounded-lg">
 
-        <div class="flex justify-between items-center mb-4">
+            <img src="{{ $user->getAvatarAttribute() }}"
+                 alt=""
+                 class="rounded-full absolute bottom-0 transform -translate-x-1/2 translate-y-1/2"
+                 style="left: 50%"
+                 width="150"
+            >
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
             <div>
                 <h2 class="font-bold text-2xl mb-0">{{ $user->name }}</h2>
                 <p class="text-sm">Joined {{ $user->created_at->diffForHumans() }}</p>
             </div>
 
-            <div>
+            <div class="flex">
                 <a class="rounded-full border border-gray-300 py-2 px-4 text-black text-xs mr-2"
                    href="">Edit Profile</a>
-                <a class="bg-blue-500 rounded-full shadow py-2 px-4 text-white text-xs"
-                   href="">Follow Me</a>
+
+                @component('components.follow-button', ['user' => $user])@endcomponent
             </div>
         </div>
 
@@ -25,12 +34,6 @@
             recusandae, rerum sapiente sint veniam veritatis vitae voluptate! Ab accusantium ad adipisci corporis
             ducimus, eum inventore, ipsa perspiciatis saepe sed totam veritatis!
         </p>
-
-        <img src="{{ $user->getAvatarAttribute() }}"
-             alt=""
-             class="rounded-full absolute"
-             style="width: 150px; left: calc(50% - 75px); top: 138px;"
-        >
     </header>
 
     @include('_timeline', [
