@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,7 +10,7 @@ class User extends Authenticatable {
     use Notifiable, Followable;
 
     protected $fillable = [
-        'username', 'name', 'email', 'password',
+        'username', 'name', 'email', 'password', 'avatar'
     ];
 
     protected $hidden = [
@@ -27,9 +26,9 @@ class User extends Authenticatable {
         return 'username';
     }
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($value)
     {
-        return 'https://i.pravatar.cc/200?u=' . $this->email;
+        return asset('storage/' . $value);
     }
 
     public function timeline()

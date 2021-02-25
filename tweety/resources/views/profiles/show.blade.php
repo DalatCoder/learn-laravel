@@ -6,7 +6,7 @@
                  alt="Cover"
                  class="mb-2 rounded-lg">
 
-            <img src="{{ $user->getAvatarAttribute() }}"
+            <img src="{{ $user->avatar }}"
                  alt=""
                  class="rounded-full absolute bottom-0 transform -translate-x-1/2 translate-y-1/2"
                  style="left: 50%"

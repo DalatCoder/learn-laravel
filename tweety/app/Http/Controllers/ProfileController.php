@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {
@@ -30,11 +29,16 @@ class ProfileController extends Controller {
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
         ]);
 
-        if (! empty(\request()->get('password')))
+        if (! empty(\request('password')))
         {
             array_push($attributes, \request()->validate([
                 'password' => ['string', 'min:8', 'confirmed']
             ]));
+        }
+
+        if (\request()->hasFile('avatar'))
+        {
+            $attributes['avatar'] = \request('avatar')->store('avatars');
         }
 
         $user->update($attributes);
