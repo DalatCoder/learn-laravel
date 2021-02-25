@@ -21,8 +21,10 @@
             </div>
 
             <div class="flex">
-                <a class="rounded-full border border-gray-300 py-2 px-4 text-black text-xs mr-2"
-                   href="">Edit Profile</a>
+                @can('edit', $user)
+                    <a class="rounded-full border border-gray-300 py-2 px-4 text-black text-xs mr-2"
+                       href="{{ $user->path('edit') }}">Edit Profile</a>
+                @endcan
 
                 @component('components.follow-button', ['user' => $user])@endcomponent
             </div>
