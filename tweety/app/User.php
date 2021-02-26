@@ -26,6 +26,13 @@ class User extends Authenticatable {
         return 'username';
     }
 
+    // $user->password = 'password';
+    // custom mutators
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
     public function getAvatarAttribute($value)
     {
         return asset('storage/' . $value);

@@ -23,11 +23,7 @@ trait Followable {
 
     public function toggleFollow(User $user)
     {
-        if ($this->following($user)) {
-            $this->unfollow($user);
-        } else {
-            $this->follow($user);
-        }
+        $this->follows()->toggle($user);
     }
 
     public function following(User $user)

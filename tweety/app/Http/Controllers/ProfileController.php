@@ -27,6 +27,7 @@ class ProfileController extends Controller {
             'username' => ['required', 'string', 'max:255', 'alpha_dash', Rule::unique('users')->ignore($user)],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
+            'avatar' => ['file']
         ]);
 
         if (! empty(\request('password')))
