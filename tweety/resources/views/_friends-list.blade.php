@@ -2,11 +2,13 @@
 
 <ul>
     @forelse(current_user()->follows as $user)
-        <li class="mb-4">
+        <li class="{{ $loop->last ? '' : 'mb-4' }}">
             <div>
-                <a href="{{ route('profile', $user) }}" class="flex items-center text-sm">
+                <a href="{{ route('profile', $user) }}"
+                   class="flex items-center text-sm">
                     <img src="{{ $user->avatar }}"
-                         class="rounded-full mr-2" alt=""
+                         class="rounded-full mr-2"
+                         alt=""
                          width="40"
                          height="40"
                     >
